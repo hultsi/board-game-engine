@@ -6,6 +6,7 @@ class GameBoard {
         this.height = height;
         this.lineWidth = lineWidth;
         this.color = color;
+        this.allObjects = [];
     }
 
     resize(width, height) {
@@ -26,6 +27,14 @@ class GameBoard {
             ctx.strokeStyle = this.color;
             ctx.stroke();
         }
+    }
+
+    createObject(obj) {
+        this.allObjects = [
+            ...this.allObjects.filter(el => el.zIndex <= obj.zIndex),
+            obj,
+            ...this.allObjects.filter(el => el.zIndex > obj.zIndex),
+        ];
     }
 }
 

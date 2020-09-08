@@ -1,5 +1,3 @@
-const gameControl = require("../gameControl.js");
-
 class Hexagon {
     constructor(x, y, radius, name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {
         this.x = x;
@@ -29,10 +27,10 @@ class Hexagon {
         ctx.stroke();
     }
 
-    setZIndex(val) {
-        this.zIndex = val;
-        gameControl.sortByZIndex();
-    }
+    // setZIndex(val) {
+    //     this.zIndex = val;
+    //     gameControl.sortByZIndex();
+    // }
 }
 
 module.exports = Hexagon;

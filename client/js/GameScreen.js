@@ -2,6 +2,7 @@ class GameScreen {
     constructor(canvasId) {
         this.x = 0;
         this.y = 0;
+        this.prevCoords = [0, 0];
         this.canvasId = canvasId;
         this.canvas = null;
         this.ctx = null;
@@ -71,6 +72,34 @@ class GameScreen {
         this.y += dy;
     }
 
+    update() {
+        let dx = 0;
+        let dy = 0;
+        dx -= 20*this.keysDown.left;
+        dx += 20*this.keysDown.right;
+        dy += 20*this.keysDown.up;
+        dy -= 20*this.keysDown.down;
+        this.move(dx, dy);
+    }
+
+    draw() {
+        if (this.bgColor != null) {
+            this.ctx.fillStyle = this.bgColor;
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+    }
+
+    fitCanvasToBrowserView() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        
+        window.addEventListener("resize",() => {
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+            this.draw();
+        });
+    }
+
     enableDragging(enable) {
         if (enable) {
             this.canvas.addEventListener("mousedown", this.mouseDown, false);
@@ -91,6 +120,16 @@ class GameScreen {
             window.removeEventListener("keydown",this.keyDown, false);
             window.removeEventListener("keyup", this.keyUp, false);
         }
+    }
+
+    velocity() {
+        const screenDx = ( this.prevCoords[0] - this.x );
+        const screenDy = -( this.prevCoords[1] - this.y );
+        
+        this.prevCoords[0] = this.x;
+        this.prevCoords[1] = this.y;
+
+        return [screenDx, screenDy];
     }
 };
 
