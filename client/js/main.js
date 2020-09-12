@@ -1,9 +1,8 @@
-const GameControl = require("./GameControl.js");
+const gc = require("./GameControl.js");
+const GameBoard = require("./GameBoard.js");
 const Hexagon = require("./shapes/Hexagon.js");
-const GameBoard = require("./shapes/GameBoard.js");
+const Rectangle = require("./shapes/Rectangle.js");
 const GameScreen = require("./GameScreen.js");
-
-const gc = new GameControl();
 
 const screen = new GameScreen("screen");
 screen.createCanvas(window.innerWidth, window.innerHeight);
@@ -13,15 +12,17 @@ screen.enableDragging(true);
 screen.enableKeyMovement(true);
 gc.createScreen(screen);
 
-const board = new GameBoard(0, 0, 1000, 1000);
-gc.addBoard(board,"board1");
+const board = new GameBoard(100, 100, 800, 500);
+gc.createBoard(board,"board1");
 
-const hex1 = new Hexagon(100, 100, 50, "hex1");
-hex1.radius = 123;
-board.createObject(hex1);
-const hex2 = new Hexagon(200, 200, 70, "hex2");
-hex2.color = "#123FFF";
-board.createObject(hex2);
+const hex1 = new Hexagon(100, 100, 60, "hex1", "#990011", 5);
+const hex2 = new Hexagon(200, 200, 110, "hex2", "#123FFF", 5);
+const rect1 = new Rectangle(400, 300, 100, 100, "rect1", "#987F2F", 1);
+gc.createObject(hex1, true);
+gc.createObject(hex2, true);
+gc.createObject(rect1, true);
+gc.allObjects.get("rect1").width = 300;
+gc.allObjects.get("hex2").setZIndex(2);
 
 const mainLoopId = window.setInterval(() => {
     gc.updateAll();

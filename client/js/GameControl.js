@@ -1,60 +1,56 @@
-const GameScreen = require("./GameScreen");
+let allObjects = new Map();
+let boards = new Map();
+let screen = null;
 
-class GameControl {
-    constructor() {
-        this.boards = new Map();
-    }
+const createObject = function createObject(obj) {
+    allObjects.set(obj.name, obj);
+};
 
-    createScreen(gameScreen) {
-        this.screen = gameScreen;
-    }
+const createScreen = function createScreen(gameScreen) {
+    screen = gameScreen;
+};
 
-    addBoard(gameBoard, id) {
-        this.boards.set(id, gameBoard);
-    }
+const createBoard = function createBoard(gameBoard, id) {
+    boards.set(id, gameBoard);
+};
 
-    updateAll() {
-        this.screen.update();
-        
-        // Move everything if screen has moved
-        const screenVel = this.screen.velocity()
-        if (screenVel[0] != 0 || screenVel[1] != 0) {
-            for (const [name, board] of this.boards) {
-                for (const obj of board.allObjects) {
-                    obj.move(screenVel[0], screenVel[1]);
-                }
-            }
-        }  
-    }
+const updateAll = function updateAll() {
+    screen.update();
 
-    drawAll() {
-        this.screen.draw();
-        for (const [name, board] of this.boards) {
-            for (const obj of board.allObjects) {
-                obj.draw(this.screen.ctx);
-            }
+    // Move everything if screen has moved
+    const screenVel = screen.velocity()
+    if (screenVel[0] != 0 || screenVel[1] != 0) {
+        for (const [name, board] of boards) {
+            board.move(screenVel[0], screenVel[1]);
         }
-    }
-
-    // updateKeyMovement() {
-    //     const scr = this.screen;
-    //     let dx = 0;
-    //     let dy = 0;
-    //     dx -= 20*scr.keysDown.left;
-    //     dx += 20*scr.keysDown.right;
-    //     dy += 20*scr.keysDown.up;
-    //     dy -= 20*scr.keysDown.down;
-    //     screen.move(dx, dy);
-    // }
+        for (const [name, obj] of allObjects) {
+            obj.move(screenVel[0], screenVel[1]);
+        }
+    }  
 }
 
-module.exports = GameControl;
+const drawAll = function drawAll() {
+    screen.draw();
+    for (const [name, board] of boards) {
+        board.draw(screen.ctx);
+    }
+    for (const [name, obj] of allObjects) {
+        obj.draw(screen.ctx);
+    }
+}
 
-// const updateScreen = function updateScreen() {
-//     updateKeyMovement();
-//     screenVelocity();
-// }
+const sortObjectsByZIndex = function sortByZIndex() {
+    allObjects = new Map([...allObjects].sort((a,b) => a[1].zIndex - b[1].zIndex));
+};
 
-// const sortByZIndex = function sortByZIndex() {
-//     allObjects.sort((a,b) => a.zIndex - b.zIndex);
-// }
+module.exports = {
+    allObjects,
+    boards,
+    screen,
+    createObject,
+    createScreen,
+    createBoard,
+    updateAll,
+    drawAll,
+    sortObjectsByZIndex,
+};

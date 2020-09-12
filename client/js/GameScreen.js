@@ -7,6 +7,7 @@ class GameScreen {
         this.canvas = null;
         this.ctx = null;
         this.bgColor = null;
+        this.zoomScale = 1;
         this.keysDown = { left: false, up: false, right: false, down: false };
         this.keyDown = (ev) => {
             if (ev.key == "ArrowLeft") {

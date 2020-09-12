@@ -1,18 +1,12 @@
-class Hexagon {
+const ConvexShape = require("./ConvexShape.js");
+
+class Hexagon extends ConvexShape {
     constructor(x, y, radius, name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {
+        super(name, color, lineWidth, zIndex);
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.lineWidth = lineWidth;
-        this.name = name;
-        this.color = color;
-        this.zIndex = zIndex;
-    }
-
-    move(dx, dy) {
-        this.x += dx;
-        this.y += dy;
-    }
+    };
 
     draw(ctx) {
         ctx.beginPath();
@@ -25,12 +19,7 @@ class Hexagon {
         ctx.lineWidth = this.lineWidth;
         ctx.strokeStyle = this.color;
         ctx.stroke();
-    }
-
-    // setZIndex(val) {
-    //     this.zIndex = val;
-    //     gameControl.sortByZIndex();
-    // }
-}
+    };
+};
 
 module.exports = Hexagon;
