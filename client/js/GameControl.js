@@ -2,17 +2,21 @@ let allObjects = new Map();
 let boards = new Map();
 let screen = null;
 
+const getScreen = function getScreen() {
+    return screen;
+}
+
 const createObject = function createObject(obj) {
     allObjects.set(obj.name, obj);
-};
+}
 
 const createScreen = function createScreen(gameScreen) {
     screen = gameScreen;
-};
+}
 
 const createBoard = function createBoard(gameBoard, id) {
     boards.set(id, gameBoard);
-};
+}
 
 const updateAll = function updateAll() {
     screen.update();
@@ -41,12 +45,12 @@ const drawAll = function drawAll() {
 
 const sortObjectsByZIndex = function sortByZIndex() {
     allObjects = new Map([...allObjects].sort((a,b) => a[1].zIndex - b[1].zIndex));
-};
+}
 
 module.exports = {
     allObjects,
     boards,
-    screen,
+    getScreen,
     createObject,
     createScreen,
     createBoard,

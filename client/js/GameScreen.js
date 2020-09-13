@@ -1,7 +1,10 @@
+const { zoomObjects } = require("./GameControl.js");
+
 class GameScreen {
     constructor(canvasId) {
-        this.x = 0;
-        this.y = 0;
+        //TODO: change this random x & y
+        this.x = 700;
+        this.y = -200;
         this.prevCoords = [0, 0];
         this.canvasId = canvasId;
         this.canvas = null;
@@ -74,13 +77,10 @@ class GameScreen {
     }
 
     update() {
-        let dx = 0;
-        let dy = 0;
-        dx -= 20*this.keysDown.left;
-        dx += 20*this.keysDown.right;
-        dy += 20*this.keysDown.up;
-        dy -= 20*this.keysDown.down;
-        this.move(dx, dy);
+        let z1 = 0;
+        z1 += 0.01 * this.keysDown.up;
+        z1 -= 0.01 * this.keysDown.down;
+        this.setZoom(this.zoomScale + z1);
     }
 
     draw() {
@@ -131,6 +131,13 @@ class GameScreen {
         this.prevCoords[1] = this.y;
 
         return [screenDx, screenDy];
+    }
+
+    setZoom(amount) {
+        this.zoomScale = amount;
+        if (this.zoomScale < .2) {
+            this.zoomScale = .2;
+        }
     }
 };
 
