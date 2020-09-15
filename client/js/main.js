@@ -10,7 +10,6 @@ screen.setBackgroundColor("#000000");
 screen.fitCanvasToBrowserView();
 screen.enableDragging(true);
 screen.enableKeyMovement(true);
-//screen.setZoom(.5);
 gc.createScreen(screen);
 
 const board = new GameBoard(100, 100, 500, 500);
@@ -26,6 +25,7 @@ gc.allObjects.get("hex2").setZIndex(2);
 
 const mainLoopId = window.setInterval(() => {
     gc.updateAll();
+    gc.updateEndAll();
     gc.drawAll();
 }, 34);
 

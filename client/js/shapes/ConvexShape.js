@@ -9,6 +9,11 @@ class ConvexShape {
         this.zoomScale = 1;
     }
 
+    position(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
     move(dx, dy) {
         this.x += dx;
         this.y += dy;
@@ -19,8 +24,8 @@ class ConvexShape {
         sortObjectsByZIndex();
     }
 
-    setZoomScale(amount) {
-        this.zoomScale = amount;
+    setZoomScale(dZoom) {
+        this.zoomScale += dZoom;
     }
 };
 

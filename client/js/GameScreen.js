@@ -11,6 +11,7 @@ class GameScreen {
         this.ctx = null;
         this.bgColor = null;
         this.zoomScale = 1;
+        this.dZoom = 0;
         this.keysDown = { left: false, up: false, right: false, down: false };
         this.keyDown = (ev) => {
             if (ev.key == "ArrowLeft") {
@@ -77,12 +78,14 @@ class GameScreen {
     }
 
     update() {
-        let z1 = 0;
-        z1 += 0.01 * this.keysDown.up;
-        z1 -= 0.01 * this.keysDown.down;
-        this.setZoom(this.zoomScale + z1);
+        this.setZoom();
     }
 
+    updateEnd() {
+        this.prevCoords[0] = this.x;
+        this.prevCoords[1] = this.y;
+    }
+    
     draw() {
         if (this.bgColor != null) {
             this.ctx.fillStyle = this.bgColor;
@@ -126,15 +129,15 @@ class GameScreen {
     velocity() {
         const screenDx = ( this.prevCoords[0] - this.x );
         const screenDy = -( this.prevCoords[1] - this.y );
-        
-        this.prevCoords[0] = this.x;
-        this.prevCoords[1] = this.y;
 
         return [screenDx, screenDy];
     }
 
-    setZoom(amount) {
-        this.zoomScale = amount;
+    setZoom() {
+        this.dZoom = 0;
+        this.dZoom += 0.03 * this.keysDown.up;
+        this.dZoom -= 0.03 * this.keysDown.down;
+        this.zoomScale += this.dZoom;
         if (this.zoomScale < .2) {
             this.zoomScale = .2;
         }

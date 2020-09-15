@@ -2,6 +2,8 @@ let allObjects = new Map();
 let boards = new Map();
 let screen = null;
 
+//Todo next: select object/board
+
 const getScreen = function getScreen() {
     return screen;
 }
@@ -21,16 +23,16 @@ const createBoard = function createBoard(gameBoard, id) {
 const updateAll = function updateAll() {
     screen.update();
 
-    // Move everything if screen has moved
-    const screenVel = screen.velocity()
-    if (screenVel[0] != 0 || screenVel[1] != 0) {
-        for (const [name, board] of boards) {
-            board.move(screenVel[0], screenVel[1]);
-        }
-        for (const [name, obj] of allObjects) {
-            obj.move(screenVel[0], screenVel[1]);
-        }
-    }  
+    for (const [name, board] of boards) {
+        board.update();
+    }
+    for (const [name, obj] of allObjects) {
+        obj.update();
+    }
+}
+
+const updateEndAll = function updateEndAll() {
+    screen.updateEnd();
 }
 
 const drawAll = function drawAll() {
@@ -55,6 +57,7 @@ module.exports = {
     createScreen,
     createBoard,
     updateAll,
+    updateEndAll,
     drawAll,
     sortObjectsByZIndex,
 };
