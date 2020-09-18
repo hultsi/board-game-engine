@@ -16,12 +16,24 @@ const createScreen = function createScreen(gameScreen) {
     screen = gameScreen;
 }
 
-const createBoard = function createBoard(gameBoard, id) {
-    boards.set(id, gameBoard);
+const createBoard = function createBoard(gameBoard) {
+    boards.set(gameBoard.name, gameBoard);
+}
+
+const moveScreen = function moveScreen() {
+    const screenVel = screen.velocity();
+
+    for (const [name, board] of boards) {
+        board.moveScreen(screenVel[0], screenVel[1]);
+    }
+    for (const [name, obj] of allObjects) {
+        obj.moveScreen(screenVel[0], screenVel[1]);
+    }
 }
 
 const updateAll = function updateAll() {
     screen.update();
+    moveScreen();
 
     for (const [name, board] of boards) {
         board.update();

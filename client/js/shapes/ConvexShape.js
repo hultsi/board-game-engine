@@ -19,6 +19,11 @@ class ConvexShape {
         this.y += dy;
     }
 
+    moveScreen(dx, dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+    
     setZIndex(val) {
         this.zIndex = val;
         sortObjectsByZIndex();

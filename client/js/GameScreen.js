@@ -1,10 +1,7 @@
-const { zoomObjects } = require("./GameControl.js");
-
 class GameScreen {
     constructor(canvasId) {
-        //TODO: change this random x & y
-        this.x = 700;
-        this.y = -200;
+        this.x = 0;
+        this.y = 0;
         this.prevCoords = [0, 0];
         this.canvasId = canvasId;
         this.canvas = null;

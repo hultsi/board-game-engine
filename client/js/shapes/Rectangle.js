@@ -18,34 +18,31 @@ class Rectangle extends ConvexShape {
     }
 
     draw(ctx) {
-        const actualWidth = this.width;// * screen.zoomScale;
-        const actualHeight = this.height;// * screen.zoomScale;
-        const actualLineWidth = this.lineWidth;// * screen.zoomScale;
-        const xx = this.x;//*screen.zoomScale + screen.canvas.width / 2;
-        const yy = this.y;//*screen.zoomScale + screen.canvas.height / 2;
-        //this.position(xx,yy);
-
-        ctx.lineWidth = actualLineWidth;
+        ctx.lineWidth = this.lineWidth;
         ctx.strokeStyle = this.color;
 
         ctx.beginPath();
-        ctx.moveTo(this.x - actualWidth/2, this.y + actualHeight/2);
+        ctx.moveTo(this.x - this.width/2, this.y + this.height/2);
         
-        ctx.lineTo(this.x + actualWidth/2, this.y + actualHeight/2);
-        ctx.lineTo(this.x + actualWidth/2, this.y - actualHeight/2);
-        ctx.lineTo(this.x - actualWidth/2, this.y - actualHeight/2);
-        ctx.lineTo(this.x - actualWidth/2, this.y + actualHeight/2);
+        ctx.lineTo(this.x + this.width/2, this.y + this.height/2);
+        ctx.lineTo(this.x + this.width/2, this.y - this.height/2);
+        ctx.lineTo(this.x - this.width/2, this.y - this.height/2);
+        ctx.lineTo(this.x - this.width/2, this.y + this.height/2);
         
         ctx.stroke();
     }
 
     zoom() {
         const screen = getScreen();
-        this.width = this.width * (1 + screen.dZoom);
-        this.height = this.height * (1 + screen.dZoom);
-        this.lineWidth = this.lineWidth * (1 + screen.dZoom);
-        this.x = (this.x - screen.canvas.width/2) * (1 + screen.dZoom) + screen.canvas.width/2;
-        this.y = (this.y - screen.canvas.height/2) * (1 + screen.dZoom) + screen.canvas.height/2;
+        const scaleFactor = (1 + screen.dZoom);
+        const halfWidth = screen.canvas.width / 2;
+        const halfHeight = screen.canvas.height / 2;
+
+        this.width *= scaleFactor;
+        this.height *= scaleFactor;
+        this.lineWidth *= scaleFactor;
+        this.x = (this.x - halfWidth) * scaleFactor + halfWidth;
+        this.y = (this.y - halfHeight) * scaleFactor + halfHeight;
     }
 }
 

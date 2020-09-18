@@ -9,39 +9,33 @@ class Hexagon extends ConvexShape {
         this.y = y + screen.canvas.height/2;
         this.radius = radius;
     }
-
+    
     update() {
         this.zoom();
-        const screenVel = getScreen().velocity()
-        this.move(screenVel[0], screenVel[1]);
     }
 
     draw(ctx) {
-        // Change this crap to Dzoomscale. E.g., change radius, linewidth, x, y based on zoomscale change
-        const actualRadius = this.radius;// * screen.zoomScale;
-        const actualLineWidth = this.lineWidth;// * screen.zoomScale;
-        const xx = this.x;// * screen.zoomScale + screen.canvas.width/2;
-        const yy = this.y;// * screen.zoomScale + screen.canvas.height/2;
-        //this.position(xx, yy);
-
-        ctx.lineWidth = actualLineWidth;
+        ctx.lineWidth = this.lineWidth;
         ctx.strokeStyle = this.color;
         
         ctx.beginPath();
-        ctx.moveTo(xx + actualRadius * Math.cos(0), yy + actualRadius * Math.sin(0));
+        ctx.moveTo(this.x + this.radius * Math.cos(0), this.y + this.radius * Math.sin(0));
         for (let side = 0; side < 7; side++) {
-            ctx.lineTo(xx + actualRadius * Math.cos(side * 2 * Math.PI / 6), 
-                        yy + actualRadius * Math.sin(side * 2 * Math.PI / 6));
+            ctx.lineTo(this.x + this.radius * Math.cos(side * 2 * Math.PI / 6), 
+                        this.y + this.radius * Math.sin(side * 2 * Math.PI / 6));
         }
         ctx.stroke();
     }
 
     zoom() {
         const screen = getScreen();
-        this.radius = this.radius * (1+screen.dZoom);
-        this.lineWidth = this.lineWidth * (1+screen.dZoom);
-        this.x = (this.x - screen.canvas.width/2) * (1+screen.dZoom) + screen.canvas.width/2;
-        this.y = (this.y - screen.canvas.height/2) * (1+screen.dZoom) + screen.canvas.height/2;
+        const scaleFactor = (1 + screen.dZoom);
+        const halfWidth = screen.canvas.width / 2;
+        const halfHeight = screen.canvas.height / 2;
+        this.radius *= scaleFactor;
+        this.lineWidth *= scaleFactor;
+        this.x = (this.x - halfWidth) * scaleFactor + halfWidth;
+        this.y = (this.y - halfHeight) * scaleFactor + halfHeight;
     }
 };
 
