@@ -1,17 +1,16 @@
-const { getScreen } = require("../GameControl.js");
+const { screen } = require("../GameControl.js");
 const ConvexShape = require("./ConvexShape.js");
 
 class Hexagon extends ConvexShape {
     constructor(x, y, radius, name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {
         super(name, color, lineWidth, zIndex);
-        const screen = getScreen();
-        this.x = x + screen.canvas.width/2;
-        this.y = y + screen.canvas.height/2;
+        this.x = x;// + screen.canvas.width/2;
+        this.y = y;// + screen.canvas.height/2;
         this.radius = radius;
+        this.scale = 1;
     }
     
     update() {
-        this.zoom();
     }
 
     draw(ctx) {
@@ -27,15 +26,16 @@ class Hexagon extends ConvexShape {
         ctx.stroke();
     }
 
-    zoom() {
-        const screen = getScreen();
-        const scaleFactor = (1 + screen.dZoom);
+    zoomScreen(dZoom) {
+        const scaleCoeff = 1 + dZoom;
         const halfWidth = screen.canvas.width / 2;
         const halfHeight = screen.canvas.height / 2;
-        this.radius *= scaleFactor;
-        this.lineWidth *= scaleFactor;
-        this.x = (this.x - halfWidth) * scaleFactor + halfWidth;
-        this.y = (this.y - halfHeight) * scaleFactor + halfHeight;
+        // this.x = (this.x - halfWidth) * scaleCoeff + halfWidth;
+        // this.y = (this.y - halfHeight) * scaleCoeff + halfHeight;
+        this.x = (this.x) * scaleCoeff;
+        this.y = (this.y) * scaleCoeff;
+        this.radius = this.radius * scaleCoeff;
+        this.lineWidth = this.lineWidth * scaleCoeff;
     }
 };
 

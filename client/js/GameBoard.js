@@ -1,16 +1,16 @@
-const { getScreen } = require("./GameControl.js");
+const { screen } = require("./GameControl.js");
 
 class GameBoard {
     constructor(x, y, width, height, name, color = "#FFFFFF", lineWidth = 2) {
-        const screen = getScreen();
-        this.x = x + screen.canvas.width / 2;
-        this.y = y + screen.canvas.height / 2;
+        this.x = x;// + screen.canvas.width / 2;
+        this.y = y;// + screen.canvas.height / 2;
         this.width = width;
         this.height = height;
         this.name = name;
         this.lineWidth = lineWidth;
         this.color = color;
         this.linkedObjects = new Map();
+        this.scale = 1;
     }
 
     linkObject(obj) {
@@ -47,7 +47,6 @@ class GameBoard {
     }
 
     update() {
-        this.zoom();
     }
 
     draw(ctx) {
@@ -65,17 +64,17 @@ class GameBoard {
         ctx.stroke();
     }
 
-    zoom() {
-        const screen = getScreen();
-        const scaleFactor = (1 + screen.dZoom);
+    zoomScreen(dZoom) {
+        const scaleCoeff = 1 + dZoom;
         const halfWidth = screen.canvas.width / 2;
         const halfHeight = screen.canvas.height / 2;
-
-        this.width *= scaleFactor;
-        this.height *= scaleFactor;
-        this.lineWidth *= scaleFactor;
-        this.x = (this.x - halfWidth) * scaleFactor + halfWidth;
-        this.y = (this.y - halfHeight) * scaleFactor + halfHeight;
+        // this.x = (this.x - halfWidth) * scaleCoeff + halfWidth;
+        // this.y = (this.y - halfHeight) * scaleCoeff + halfHeight;
+        this.x = (this.x) * scaleCoeff;
+        this.y = (this.y) * scaleCoeff;
+        this.width = this.width * scaleCoeff;
+        this.height = this.height * scaleCoeff;
+        this.lineWidth = this.lineWidth * scaleCoeff;
     }
 }
 

@@ -1,19 +1,13 @@
+const GameScreen = require("./GameScreen.js");
+
+let screen = new GameScreen("screen");
 let allObjects = new Map();
 let boards = new Map();
-let screen = null;
 
-//Todo next: select object/board
-
-const getScreen = function getScreen() {
-    return screen;
-}
+//Todo next: remove screen dependency from hexagon, rectangle and gameboard
 
 const createObject = function createObject(obj) {
     allObjects.set(obj.name, obj);
-}
-
-const createScreen = function createScreen(gameScreen) {
-    screen = gameScreen;
 }
 
 const createBoard = function createBoard(gameBoard) {
@@ -22,7 +16,7 @@ const createBoard = function createBoard(gameBoard) {
 
 const moveScreen = function moveScreen() {
     const screenVel = screen.velocity();
-
+    
     for (const [name, board] of boards) {
         board.moveScreen(screenVel[0], screenVel[1]);
     }
@@ -31,10 +25,23 @@ const moveScreen = function moveScreen() {
     }
 }
 
-const updateAll = function updateAll() {
-    screen.update();
-    moveScreen();
+const zoomScreen = function zoomScreen() {
+    const dZoom = screen.zoomChange();
 
+    for (const [name, board] of boards) {
+        board.zoomScreen(dZoom);
+    }
+    for (const [name, obj] of allObjects) {
+        obj.zoomScreen(dZoom);
+    }
+}
+
+const updateAllBegin = function updateAllBegin() {
+    moveScreen();
+    zoomScreen();
+}
+
+const updateAll = function updateAll() {
     for (const [name, board] of boards) {
         board.update();
     }
@@ -43,7 +50,7 @@ const updateAll = function updateAll() {
     }
 }
 
-const updateEndAll = function updateEndAll() {
+const updateAllEnd = function updateAllEnd() {
     screen.updateEnd();
 }
 
@@ -62,14 +69,14 @@ const sortObjectsByZIndex = function sortByZIndex() {
 }
 
 module.exports = {
+    screen,
     allObjects,
     boards,
-    getScreen,
     createObject,
-    createScreen,
     createBoard,
+    updateAllBegin,
     updateAll,
-    updateEndAll,
+    updateAllEnd,
     drawAll,
     sortObjectsByZIndex,
 };

@@ -23,14 +23,10 @@ class ConvexShape {
         this.x += dx;
         this.y += dy;
     }
-    
+
     setZIndex(val) {
         this.zIndex = val;
         sortObjectsByZIndex();
-    }
-
-    setZoomScale(dZoom) {
-        this.zoomScale += dZoom;
     }
 };
 
