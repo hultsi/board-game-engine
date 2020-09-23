@@ -1,5 +1,7 @@
 const GameScreen = require("./GameScreen.js");
+const GameTable = require("./GameTable.js");
 
+let table = new GameTable(0, 0, "table");
 let screen = new GameScreen("screen");
 let allObjects = new Map();
 let boards = new Map();
@@ -17,6 +19,7 @@ const createBoard = function createBoard(gameBoard) {
 const moveScreen = function moveScreen() {
     const screenVel = screen.velocity();
     
+    table.moveScreen(screenVel[0], screenVel[1]);
     for (const [name, board] of boards) {
         board.moveScreen(screenVel[0], screenVel[1]);
     }
@@ -28,6 +31,7 @@ const moveScreen = function moveScreen() {
 const zoomScreen = function zoomScreen() {
     const dZoom = screen.zoomChange();
 
+    table.zoomScreen(dZoom);
     for (const [name, board] of boards) {
         board.zoomScreen(dZoom);
     }
@@ -56,6 +60,8 @@ const updateAllEnd = function updateAllEnd() {
 
 const drawAll = function drawAll() {
     screen.draw();
+    table.draw(screen.ctx);
+
     for (const [name, board] of boards) {
         board.draw(screen.ctx);
     }
@@ -69,6 +75,7 @@ const sortObjectsByZIndex = function sortByZIndex() {
 }
 
 module.exports = {
+    table,
     screen,
     allObjects,
     boards,

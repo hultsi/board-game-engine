@@ -2,6 +2,7 @@ class GameScreen {
     constructor(canvasId) {
         this.x = 0;
         this.y = 0;
+        this.boundaries = { min_x: 0, max_y: 0, max_x: 32768, min_y: -32768 };
         this.prevCoords = [0, 0];
         this.canvasId = canvasId;
         this.canvas = null;
@@ -71,6 +72,16 @@ class GameScreen {
     move(dx, dy) {
         this.x += dx;
         this.y += dy;
+        if (this.x < this.boundaries.min_x) {
+            this.x = this.boundaries.min_x;
+        } else if (this.x > this.boundaries.max_x - this.canvas.width) {
+            this.x = this.boundaries.max_x - this.canvas.width;
+        }
+        if (this.y > this.boundaries.max_y) {
+            this.y = this.boundaries.max_y;
+        } else if (this.y < this.boundaries.min_y + this.canvas.height) {
+            this.y = this.boundaries.min_y + this.canvas.height;
+        }
     }
 
     update() {
