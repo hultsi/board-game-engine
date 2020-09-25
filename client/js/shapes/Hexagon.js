@@ -1,4 +1,4 @@
-const { screen } = require("../GameControl.js");
+const { screen } = require("../gameControl.js");
 const ConvexShape = require("./ConvexShape.js");
 
 class Hexagon extends ConvexShape {

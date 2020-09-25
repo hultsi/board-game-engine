@@ -1,5 +1,6 @@
 const GameScreen = require("./GameScreen.js");
 const GameTable = require("./GameTable.js");
+const listeners = require("./listeners.js");
 
 let table = new GameTable(0, 0, "table");
 let screen = new GameScreen("screen");
@@ -17,30 +18,34 @@ const createBoard = function createBoard(gameBoard) {
 }
 
 const moveScreen = function moveScreen() {
-    const screenVel = screen.velocity();
-    
-    table.moveScreen(screenVel[0], screenVel[1]);
-    for (const [name, board] of boards) {
-        board.moveScreen(screenVel[0], screenVel[1]);
+    let { dx, dy } = listeners.mouse;
+
+    if (listeners.mouse.mousedown) {
+        if (screen.x - dx < 0)
+            dx = screen.x;
+        if (screen.y - dy < 0)
+            dy = screen.y;
+        screen.move(-dx, -dy);
+        table.moveScreen(dx, dy);
+        for (const [name, obj] of allObjects) {
+            obj.moveScreen(dx, dy);
+        }
     }
-    for (const [name, obj] of allObjects) {
-        obj.moveScreen(screenVel[0], screenVel[1]);
-    }
+    listeners.mouse.dx = 0;
+    listeners.mouse.dy = 0;
 }
 
 const zoomScreen = function zoomScreen() {
-    const dZoom = screen.zoomChange();
+    let dZoom = 0.03 * (listeners.keys.up - listeners.keys.down);
 
     table.zoomScreen(dZoom);
-    for (const [name, board] of boards) {
-        board.zoomScreen(dZoom);
-    }
     for (const [name, obj] of allObjects) {
         obj.zoomScreen(dZoom);
     }
 }
 
 const updateAllBegin = function updateAllBegin() {
+    // screen.width and screen.height to objects here
     moveScreen();
     zoomScreen();
 }

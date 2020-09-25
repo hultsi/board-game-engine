@@ -1,4 +1,4 @@
-const { screen } = require("./GameControl.js");
+const { screen } = require("./gameControl.js");
 
 class GameBoard {
     constructor(x, y, width, height, name, color = "#FFFFFF", lineWidth = 2) {

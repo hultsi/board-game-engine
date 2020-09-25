@@ -1,4 +1,4 @@
-const { sortObjectsByZIndex } = require("../GameControl.js");
+const { sortObjectsByZIndex } = require("../gameControl.js");
 
 class ConvexShape {
     constructor(name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {

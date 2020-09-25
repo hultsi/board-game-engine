@@ -1,4 +1,4 @@
-const { screen } = require("../GameControl.js");
+//const { screen } = require("../GameControl.js");
 const ConvexShape = require("./ConvexShape.js");
 
 class Rectangle extends ConvexShape {
@@ -32,8 +32,8 @@ class Rectangle extends ConvexShape {
 
     zoomScreen(dZoom) {
         const scaleCoeff = 1 + dZoom;
-        const halfWidth = screen.canvas.width / 2;
-        const halfHeight = screen.canvas.height / 2;
+        // const halfWidth = screen.canvas.width / 2;
+        // const halfHeight = screen.canvas.height / 2;
         // this.x = (this.x - halfWidth) * scaleCoeff + halfWidth;
         // this.y = (this.y - halfHeight) * scaleCoeff + halfHeight;
         this.x = (this.x) * scaleCoeff;
