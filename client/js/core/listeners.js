@@ -13,7 +13,14 @@ const mouse = {
     y: 0,
     dx: 0,
     dy: 0,
+    dWheel: 0,
 };
+
+const updateEnd = function updateEnd() {
+    mouse.dx = 0;
+    mouse.dy = 0;
+    mouse.dWheel = 0;
+}
 
 const keyDown = function keyDown(ev) {
     if (ev.key == "ArrowLeft") {
@@ -59,6 +66,10 @@ const mouseUp = function mouseUp(ev) {
     mouse.mousedown = false;
 }
 
+const mouseWheel = function mouseWheel(ev) {
+    mouse.dWheel = -ev.deltaY;
+}
+
 const enableKeyListeners = function enableKeyListeners(enable) {
     if (enable) {
         window.addEventListener("keydown", keyDown, false);
@@ -74,10 +85,12 @@ const enableMouseListeners = function enableMouseListeners(enable) {
         window.addEventListener("mousedown", mouseDown, false);
         window.addEventListener('mousemove', mouseMoved, false);
         window.addEventListener("mouseup", mouseUp, false);
+        window.addEventListener("wheel", mouseWheel, false);
     } else {
         window.removeEventListener("mousedown", mouseDown, false);
         window.removeEventListener('mousemove', mouseMoved, false);
         window.removeEventListener("mouseup", mouseUp, false);
+        window.removeEventListener("wheel", mouseWheel, false);
     }
 }
 
@@ -86,4 +99,5 @@ module.exports = {
     mouse,
     enableKeyListeners,
     enableMouseListeners,
+    updateEnd,
 };

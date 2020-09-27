@@ -7,7 +7,7 @@ class GameTable {
         this.name = name;
         this.lineWidth = lineWidth;
         this.color = color;
-        this.scale = 1;
+        this.scale = 1;   
     }
 
     moveScreen(dx, dy) {
@@ -15,27 +15,30 @@ class GameTable {
         this.y += dy;
     }
 
-    draw(ctx) {
-        ctx.lineWidth = this.lineWidth;
+    draw(ctx, offsetX, offsetY, scale) {
+        const xx = this.x * scale + offsetX;
+        const yy = this.y * scale + offsetY;
+        const width = this.width * scale;
+        const height = this.height * scale;
+        
+        ctx.save();
+        ctx.lineWidth = this.lineWidth * scale;
         ctx.strokeStyle = this.color;
 
         ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
+        ctx.moveTo(xx, yy);
         
-        ctx.lineTo(this.x + this.width, this.y);
-        ctx.lineTo(this.x + this.width, this.y + this.height);
-        ctx.lineTo(this.x, this.y + this.height);
-        ctx.lineTo(this.x, this.y);
+        ctx.lineTo(xx + width, yy);
+        ctx.lineTo(xx + width, yy + height);
+        ctx.lineTo(xx, yy + height);
+        ctx.lineTo(xx, yy);
         
         ctx.stroke();
+        ctx.restore();
     }
 
-    zoomScreen(dZoom) {
+    updateDrawingCoordinates(dZoom) {
         const scaleCoeff = 1 + dZoom;
-        // const halfWidth = screen.canvas.width / 2;
-        // const halfHeight = screen.canvas.height / 2;
-        // this.x = (this.x - halfWidth) * scaleCoeff + halfWidth;
-        // this.y = (this.y - halfHeight) * scaleCoeff + halfHeight;
         this.x = (this.x) * scaleCoeff;
         this.y = (this.y) * scaleCoeff;
         this.width = this.width * scaleCoeff;
