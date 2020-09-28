@@ -37,8 +37,6 @@ class GameScreen {
     }
 
     updateEnd() {
-        this.prevCoords[0] = this.x;
-        this.prevCoords[1] = this.y;
     }
     
     draw() {

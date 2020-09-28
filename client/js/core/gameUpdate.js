@@ -1,41 +1,17 @@
+const ImageCollection = require("../helpers/ImageCollection.js");
 const listeners = require("./listeners.js");
 const { 
     allObjects, table, screen, 
     moveScreen, zoomScreen 
 } = require("./gameControl.js");
+const grid = require("../helpers/grid.js");
 
-// Define all program related images here
-let imagePaths = [{
-    name: "main_map", url: "../TM_map.jpeg"
-}];
+// Once images are loaded up, they are here as an image map 
+// imageCollection.images[key]
+let imageCollection = new ImageCollection();
 
-const ImageCollection = function ImageCollection(){
-    this.total = 0;
-    this.images = {};
-    this.load = function(list, callback) {
-        let total = this.total;
-        for(let i = 0; i < list.length; i++){
-            let img = new Image();
-            this.images[list[i].name] = img;
-            img.onload = function(){
-                total++;
-                if(total == list.length){
-                    callback && callback();
-                }
-            };
-            img.src = list[i].url;
-        }
-    }
-
-    this.get = function(name){
-        return this.images[name] || (function(){throw "Not exist"})();
-    };
-}
-// Once they are loaded up, they are here as an image map (with name == key)
-let imageMap = new ImageCollection();
-
-const loadImages = function loadImages(callback) {
-    imageMap.load(imagePaths, callback);
+const initiateGame = function initiateGame(imagePaths, callback) {
+    imageCollection.load(imagePaths, callback);
 }
 
 const updateAllBegin = function updateAllBegin() {
@@ -50,7 +26,6 @@ const updateAll = function updateAll() {
 }
 
 const updateAllEnd = function updateAllEnd() {
-    screen.updateEnd();
     listeners.updateEnd();
 }
 
@@ -60,6 +35,8 @@ const drawAll = function drawAll() {
     const offsetY = -screen.y;
     const scale = screen.zoomScale;
 
+    grid.drawGrid(screen.ctx, offsetX, offsetY, screen.ctx.canvas.width, screen.ctx.canvas.height, scale);
+
     table.draw(screen.ctx, offsetX, offsetY, scale);
     for (const [name, obj] of allObjects) {
         obj.draw(screen.ctx, offsetX, offsetY, scale);
@@ -67,8 +44,8 @@ const drawAll = function drawAll() {
 }
 
 module.exports = {
-    imageMap,
-    loadImages,
+    imageCollection,
+    initiateGame,
     updateAllBegin,
     updateAll,
     updateAllEnd,
