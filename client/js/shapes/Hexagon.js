@@ -1,11 +1,10 @@
 const ConvexShape = require("./ConvexShape.js");
 
 class Hexagon extends ConvexShape {
-    constructor(x, y, radius, name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {
-        super(name, color, lineWidth, zIndex);
-        this.x = x;
-        this.y = y;
+    constructor(x, y, img, radius, name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {
+        super(x, y, name, color, lineWidth, zIndex);
         this.radius = radius;
+        this.img = img;
     }
     
     update() {

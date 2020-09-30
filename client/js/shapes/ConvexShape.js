@@ -1,11 +1,14 @@
 const { sortObjectsByZIndex } = require("../core/gameControl.js");
 
 class ConvexShape {
-    constructor(name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {
+    constructor(x, y, name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {
+        this.x = x;
+        this.y = y;
         this.lineWidth = lineWidth;
         this.name = name;
         this.color = color;
         this.zIndex = zIndex;
+        this.isStatic = true;
         this.zoomScale = 1;
     }
 
@@ -15,11 +18,6 @@ class ConvexShape {
     }
 
     move(dx, dy) {
-        this.x += dx;
-        this.y += dy;
-    }
-
-    moveScreen(dx, dy) {
         this.x += dx;
         this.y += dy;
     }
