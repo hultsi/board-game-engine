@@ -15,8 +15,8 @@ class Rectangle extends ConvexShape {
     }
 
     draw(ctx, offsetX, offsetY, scale) {
-        const xx = this.x * scale + offsetX;
-        const yy = this.y * scale + offsetY;
+        const xx = (this.x + offsetX) * scale;
+        const yy = (this.y + offsetY) * scale;
         const width = this.width * scale;
         const height = this.height * scale;
 

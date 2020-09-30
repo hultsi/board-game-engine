@@ -17,7 +17,7 @@ const createBoard = function createBoard(gameBoard) {
 const moveScreen = function moveScreen() {
     let { dx, dy } = listeners.mouse;
     if (listeners.mouse.mousedown) {
-        screen.move(-dx, -dy);
+        screen.move(-8*dx / screen.zoomScale, -8*dy / screen.zoomScale);
     }
 }
 
@@ -30,7 +30,10 @@ const zoomScreen = function zoomScreen() {
             dZoom = 1.75 - screen.zoomScale;
         }
         screen.zoomScale += dZoom;
-        screen.move(dZoom * screen.canvas.width/2, dZoom * screen.canvas.height/2);
+
+        const dx = -(screen.canvas.width / screen.zoomScale - screen.viewWidth)/2;
+        const dy = -(screen.canvas.height / screen.zoomScale - screen.viewHeight)/2;
+        screen.move(dx, dy);
     }
 }
 
