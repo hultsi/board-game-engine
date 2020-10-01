@@ -1,5 +1,5 @@
 const drawGrid = function drawGrid(ctx, minX, minY, maxX, maxY, scale = 1, 
-    minor = 20, stroke = "#00FF00", fill = "#009900")  {
+    minor = 20, stroke = "#00FF00")  {
 
     minX = minX || 0;
     minY = minY || 0;
@@ -7,48 +7,32 @@ const drawGrid = function drawGrid(ctx, minX, minY, maxX, maxY, scale = 1,
     maxY = maxY || ctx.canvas.height;
     
     const coeff = 5;
-    const baseMinor = minor;
-    const baseMajor = baseMinor * coeff;
-    minor = Math.round(minor*scale*100000)/100000;
+    minor = Math.round(minor*scale*1000)/1000;
     major = minor * coeff;
     
     const { width, height } = ctx.canvas;
     const nMax = Math.ceil(width / minor) + 10;
-    
-    const nearestMajor = function nearestMajor(value, baseMajor) {
-        return Math.round((value)/baseMajor) * baseMajor;
-    }
 
     ctx.save();
     ctx.strokeStyle = stroke;
-    ctx.fillStyle = fill;
-    
-    const majorOffsetX = (minX > 0 ? major - (minX*scale % major) : -(minX*scale % major));
-    let x = -majorOffsetX; 
-    let value = x/scale - minX;
+    let x = -(minX > 0 ? major - (minX*scale % major) : -(minX*scale % major));
     for (let n = 0; n < nMax; ++n) {
         ctx.beginPath();
         ctx.moveTo(Math.round(x), 0);
         ctx.lineTo(Math.round(x), height);
         ctx.lineWidth = (n % coeff == 0) ? 0.5 : 0.25;
         ctx.stroke();
-        !(n % coeff) && ctx.fillText( nearestMajor(value,baseMajor), x, 10); 
         x += minor;
-        value += baseMinor;
     }
 
-    const majorOffsetY = (minY > 0 ? major - (minY*scale % major) : -(minY*scale % major));
-    let y = -majorOffsetY; 
-    value = (y/scale - minY); 
+    let y = -(minY > 0 ? major - (minY*scale % major) : -(minY*scale % major));
     for (let n = 0; n < nMax; ++n) {
         ctx.beginPath();
         ctx.moveTo(0, Math.round(y));
         ctx.lineTo(width, Math.round(y));
         ctx.lineWidth = (n % coeff == 0) ? 0.5 : 0.25;
         ctx.stroke();
-        !(n % coeff) && ctx.fillText( nearestMajor(value,baseMajor), 10, y + 10); 
         y += minor;
-        value += baseMinor;
     }
 
     ctx.restore();
@@ -72,12 +56,14 @@ const drawHexGrid = function drawHexGrid(ctx, minX, minY, maxX, maxY, scale = 1,
     ctx.save();
     ctx.lineWidth = .25 * scale;
     ctx.strokeStyle = stroke;
+    ctx.fillStyle = fill;
     
     let x = -30;
     let y = -30;
     let xInd = 0;
     let yInd = 0;
     let evenOdd = 1;
+    ctx.lineWidth = 1 * scale;
     while (yInd < yMax) {
         const xx = (x + radius) * scale;
         const yy = (y + radius) * scale;
@@ -101,11 +87,41 @@ const drawHexGrid = function drawHexGrid(ctx, minX, minY, maxX, maxY, scale = 1,
         }
     }
 
+    ctx.restore();
+}
 
+const drawCoordinates = function drawCoordinates(ctx, minX, minY, spacing, scale = 1, fill = "#009900") {
+    // This might be useless, maybe just round valueX and valueY in the beginning?
+    const nearestMajor = function nearestMajor(value, baseMajor) {
+        return Math.round((value)/baseMajor) * baseMajor;
+    }
+
+    const baseSpacing = spacing;
+    spacing = spacing * scale;
+    
+    const nMax = Math.ceil(ctx.canvas.width / spacing) + 3;
+
+    let x = -(minX > 0 ? spacing - (minX*scale % spacing) : -(minX*scale % spacing));
+    let y = -(minY > 0 ? spacing - (minY*scale % spacing) : -(minY*scale % spacing));
+    let valueX = x/scale - minX;
+    let valueY = y/scale - minY;
+    ctx.save();
+    ctx.fillStyle = fill;
+    ctx.font = "13px monospace";
+    console.log(nMax);
+    for (let n = 0; n < nMax; ++n) {
+        ctx.fillText( nearestMajor(valueX,baseSpacing), x, 13); 
+        ctx.fillText( nearestMajor(valueY,baseSpacing), 1, y + 10); 
+        x += spacing;
+        y += spacing;
+        valueX += baseSpacing;
+        valueY += baseSpacing;
+    }
     ctx.restore();
 }
 
 module.exports = {
     drawGrid,
     drawHexGrid,
+    drawCoordinates,
 };

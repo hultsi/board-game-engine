@@ -37,6 +37,7 @@ const drawAll = function drawAll() {
 
     //grid.drawGrid(screen.ctx, offsetX, offsetY, screen.ctx.canvas.width, screen.ctx.canvas.height, scale);
     grid.drawHexGrid(screen.ctx, offsetX, offsetY, screen.ctx.canvas.width, screen.ctx.canvas.height, scale);
+    grid.drawCoordinates(screen.ctx, offsetX, offsetY, 100);
 
     table.draw(screen.ctx, offsetX, offsetY, scale);
     for (const [name, obj] of allObjects) {
