@@ -17,7 +17,7 @@ const createBoard = function createBoard(gameBoard) {
 const moveScreen = function moveScreen() {
     let { dx, dy } = listeners.mouse;
     if (listeners.mouse.mousedown) {
-        screen.move(-8*dx / screen.zoomScale, -8*dy / screen.zoomScale);
+        screen.move(-1*dx / screen.zoomScale, -1*dy / screen.zoomScale);
     }
 }
 

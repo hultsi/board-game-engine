@@ -11,8 +11,8 @@ class Hexagon extends ConvexShape {
     }
 
     draw(ctx, offsetX, offsetY, scale) {
-        const xx = (this.x + offsetX) * scale;
-        const yy = (this.y + offsetY) * scale;
+        const xx = (this.x + this.radius + offsetX) * scale;
+        const yy = (this.y + this.radius + offsetY) * scale;
         const radius = this.radius * scale;
         
         ctx.save();
