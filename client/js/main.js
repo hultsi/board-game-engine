@@ -20,12 +20,12 @@ const startGame = function startGame() {
     gameControl.screen.fitCanvasToBrowserView();
     gameControl.screen.setBackgroundColor("#000000");
 
-    //const hex1 = new Hexagon(0, 0, null, 50, "hex1", "#990011", 2);
+    const hex1 = new Hexagon(0, 0, null, 50, "hex1", "#990011", 2);
     // const rect1 = new Rectangle(0, 0, null, 100, 100, "rect1", "#FFFFFF", 2);
     // const rect2 = new Rectangle(100, 100, null, 100, 100, "rect2", "#FFFFFF", 2);
     // const rect3 = new Rectangle(0, 100, null, 100, 100, "rect3", "#FFFFFF", 2);
 
-    //gameControl.createObject(hex1);
+    gameControl.createObject(hex1);
     // gameControl.createObject(rect1);
     // gameControl.createObject(rect2);
     // gameControl.createObject(rect3);
