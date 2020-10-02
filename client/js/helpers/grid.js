@@ -57,8 +57,8 @@ const drawHexGrid = function drawHexGrid(ctx, minX, minY, maxX, maxY, scale = 1,
     ctx.strokeStyle = stroke;
     ctx.fillStyle = fill;
     
-    let xMod = 3*scaledRadius;
-    let yMod = Math.sqrt(3)*scaledRadius;
+    const xMod = 3*scaledRadius;
+    const yMod = Math.sqrt(3)*scaledRadius;
     let x = -(minX > 0 ? xMod - (minX*scale % xMod) : -(minX*scale % xMod));
     let y = -(minY > 0 ? yMod - (minY*scale % yMod) : -(minY*scale % yMod));
     let xInd = 0;
