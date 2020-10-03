@@ -1,10 +1,9 @@
 const ImageCollection = require("../helpers/ImageCollection.js");
 const listeners = require("./listeners.js");
 const { 
-    allObjects, table, screen, 
+    allObjects, table, screen, grids,
     moveScreen, zoomScreen 
 } = require("./gameControl.js");
-const grid = require("../helpers/grid.js");
 
 // Once images are loaded up, they are here as an image map 
 // imageCollection.images[key]
@@ -35,13 +34,12 @@ const drawAll = function drawAll() {
     const offsetY = -screen.y;
     const scale = screen.zoomScale;
 
-    //grid.drawGrid(screen.ctx, offsetX, offsetY, screen.ctx.canvas.width, screen.ctx.canvas.height, scale);
-    grid.drawHexGrid(screen.ctx, offsetX, offsetY, screen.ctx.canvas.width, screen.ctx.canvas.height, scale);
-    grid.drawCoordinates(screen.ctx, offsetX, offsetY, 100, scale);
-
     table.draw(screen.ctx, offsetX, offsetY, scale);
     for (const [name, obj] of allObjects) {
         obj.draw(screen.ctx, offsetX, offsetY, scale);
+    }
+    for (const [name, grid] of grids) {
+        grid.draw(screen.ctx, offsetX, offsetY, scale);
     }
 }
 

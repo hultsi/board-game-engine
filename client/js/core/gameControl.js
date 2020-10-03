@@ -2,16 +2,17 @@ const GameScreen = require("../world/GameScreen.js");
 const GameTable = require("../world/GameTable.js");
 const listeners = require("./listeners.js");
 
-let table = new GameTable(0, 0, "table");
-let screen = new GameScreen("screen");
-let allObjects = new Map();
+const table = new GameTable(0, 0, "table");
+const screen = new GameScreen("screen");
+const allObjects = new Map();
+const grids = new Map();
 
 const createObject = function createObject(obj) {
     allObjects.set(obj.name, obj);
 }
 
-const createBoard = function createBoard(gameBoard) {
-    boards.set(gameBoard.name, gameBoard);
+const createGrid = function createGrid(grid) {
+    grids.set(grid.name, grid);
 }
 
 const moveScreen = function moveScreen() {
@@ -44,10 +45,11 @@ const sortObjectsByZIndex = function sortByZIndex() {
 module.exports = {
     table,
     screen,
+    grids,
     allObjects,
     moveScreen,
     zoomScreen,
     createObject,
-    createBoard,
+    createGrid,
     sortObjectsByZIndex,
 };
