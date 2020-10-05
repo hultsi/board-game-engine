@@ -10,6 +10,7 @@ class GameScreen {
         this.canvas = null;
         this.ctx = null;
         this.bgColor = null;
+        this.stop = false;
     }
 
     createCanvas(width, height) {

@@ -14,18 +14,18 @@ let imagePaths = [{
 const startGame = function startGame() {
     // Set up the game here
     const { images } = gameUpdate.imageCollection;
-
+    const { screen, grids } = gameControl.game;
     listeners.enableKeyListeners(true);
     listeners.enableMouseListeners(true);
 
-    gameControl.screen.createCanvas(window.innerWidth, window.innerHeight);
-    gameControl.screen.fitCanvasToBrowserView();
-    gameControl.screen.setBackgroundColor("#000000");
+    screen.createCanvas(window.innerWidth, window.innerHeight);
+    screen.fitCanvasToBrowserView();
+    screen.setBackgroundColor("#000000");
 
     gameControl.createGrid(new RectGrid({x: 100, y: 100}, 100, 100, 2, 2, "rect_grid_1", 2, "#FF00FF"));
     
     // const hex1 = new Hexagon(x:0, y:0}, null, 50, "hex1", "#990011", 2);
-     const rect1 = new Rectangle(gameControl.grids.get("rect_grid_1").getCoords(2,1), null, 100, 100, "rect1", "#FFFFFF", 2);
+    const rect1 = new Rectangle(grids.get("rect_grid_1").getCoords(1,1), null, 100, 100, "rect1", "#FFFFFF", "#FFFFFF", 2);
     // const rect2 = new Rectangle(x:0, y:0}, null, 100, 100, "rect2", "#FFFFFF", 2);
     // const rect3 = new Rectangle(x:0, y:0}, null, 100, 100, "rect3", "#FFFFFF", 2);
 
@@ -35,7 +35,6 @@ const startGame = function startGame() {
     // gameControl.createObject(rect3);
 
     // Then run the main loop
-    const screen = gameControl.screen;
     const mainLoopId = window.setInterval(() => {
         gameUpdate.updateAllBegin();
         gameUpdate.updateAll();
@@ -43,7 +42,7 @@ const startGame = function startGame() {
         
         gameUpdate.drawAll();
         grid.drawGrid(screen.ctx, -screen.x, -screen.y, screen.ctx.canvas.width, screen.ctx.canvas.height, screen.zoomScale);
-        grid.drawCoordinates(screen.ctx, -screen.x, -screen.x, 100, screen.zoomScale);
+        grid.drawCoordinates(screen.ctx, -screen.x, -screen.y, 100, screen.zoomScale);
     }, 34);
 
     // And exit here

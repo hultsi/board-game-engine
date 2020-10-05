@@ -6,6 +6,8 @@ const keys = {
 };
 
 const mouse = {
+    mouseclick: false,
+    mousereleased: false,
     mousedown: false,
     left: false,
     right: false,
@@ -20,6 +22,8 @@ const updateEnd = function updateEnd() {
     mouse.dx = 0;
     mouse.dy = 0;
     mouse.dWheel = 0;
+    mouse.mouseclick = false;
+    mouse.mousereleased = false;
 }
 
 const keyDown = function keyDown(ev) {
@@ -46,7 +50,6 @@ const keyUp = function keyUp(ev) {
     }
 }
 
-//todo think about this
 const mouseMoved = function mouseMoved(ev) {
     mouse.x = ev.offsetX;
     mouse.y = ev.offsetY;
@@ -55,6 +58,7 @@ const mouseMoved = function mouseMoved(ev) {
 }
 
 const mouseDown = function mouseDown (ev) {
+    mouse.mouseclick = true;
     mouse.mousedown = true;
     mouse.x = ev.offsetX;
     mouse.y = ev.offsetY;
@@ -63,6 +67,7 @@ const mouseDown = function mouseDown (ev) {
 }
 
 const mouseUp = function mouseUp(ev) {
+    mouse.mousereleased = true;
     mouse.mousedown = false;
 }
 
