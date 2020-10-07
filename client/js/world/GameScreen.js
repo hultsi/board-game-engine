@@ -62,6 +62,12 @@ class GameScreen {
             this.draw();
         });
     }
+
+    preventContextMenu() {
+        this.canvas.addEventListener("contextmenu", (ev) => {
+            ev.preventDefault();
+        });
+    }
 };
 
 module.exports = GameScreen;

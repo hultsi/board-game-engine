@@ -34,11 +34,32 @@ class Rectangle extends ConvexShape {
         ctx.lineTo(xx + width, yy + height);
         ctx.lineTo(xx, yy + height);
         ctx.lineTo(xx, yy);
-        
+
         ctx.stroke();
         ctx.fill();
 
         ctx.restore();
+
+        if (this.isSelected)
+            this.drawOutline(ctx, xx, yy, width, height, scale);
+    }
+
+    drawOutline(ctx,xx,yy,width,height,scale) {
+        ctx.save();
+
+        ctx.lineWidth = this.lineWidth * scale * 1;
+        for (let i = 0; i < 3; ++i) {
+            ctx.beginPath();
+            ctx.moveTo(xx-i, yy-i);
+            ctx.strokeStyle = `rgba(0,${255-i*35},0,${.8/(i*.5+.8)})`;
+            ctx.lineTo(xx + width + i, yy - i);
+            ctx.lineTo(xx + width + i, yy + height + i);
+            ctx.lineTo(xx - i, yy + height + i);
+            ctx.lineTo(xx - i, yy - i);
+            ctx.stroke();
+        }
+
+        ctx.restore();    
     }
 }
 

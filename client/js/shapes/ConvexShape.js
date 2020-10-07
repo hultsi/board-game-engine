@@ -8,6 +8,7 @@ class ConvexShape {
         this.color = color;
         this.zIndex = zIndex;
         this.isStatic = true;
+        this.isSelected = false;
         this.beingDragged = false;
     }
 
