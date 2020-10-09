@@ -1,31 +1,14 @@
-const GameScreen = require("../world/GameScreen.js");
-const GameTable = require("../world/GameTable.js");
-
+const game = require("./game.js");
 const listeners = require("./listeners.js");
 const { pointInRect } = require("../helpers/collision.js");
 
-const game = {
-    table: new GameTable(0, 0, "table"),
-    screen: new GameScreen("screen"),
-    grids: new Map(),
-    objects: {
-        all: new Map(),
-        sortByZIndex: function() { this.all = new Map([...this.all].sort((a,b) => a[1].zIndex - b[1].zIndex)) },
-        dragged: {
-            obj: null,
-            offsetX: 0,
-            offsetY: 0,
-        },
-        selected: null,
-    },
-}
 
 const createObject = function createObject(obj) {
-    game.objects.all.set(obj.name, obj);
+    game.objects.set(obj);
 }
 
 const createGrid = function createGrid(grid) {
-    game.grids.set(grid.name, grid);
+    game.grids.set(grid);
 }
 
 const moveScreen = function moveScreen() {
@@ -54,14 +37,14 @@ const zoomScreen = function zoomScreen() {
 
 const dragObject = function dragObject() {
     // Needs to take into account screen offset
-    const { screen, objects } = game;
+    const { screen, objects, others } = game;
     const mx = listeners.mouse.x/screen.zoomScale + screen.x;
     const my = listeners.mouse.y/screen.zoomScale + screen.y;
     if (listeners.mouse.mouseclick) {
         if (objects.selected)
             objects.selected.isSelected = false;
         objects.selected = null;
-        for (const [name, obj] of objects.all) {
+        for (const obj of objects.all) {
             if (obj.isStatic)
                 continue;
             if (obj.constructor.name == "Rectangle") {
@@ -71,20 +54,21 @@ const dragObject = function dragObject() {
                     screen.stop = true;
                     obj.beingDragged = true;
                     obj.isSelected = true;
-                    // todo: Zindex = max + 1 and others are reduced by 1
-                    // also todo: change object map to array ??
-                    obj.zIndex = Math.max(...Array.from(objects.all.values()).map(el => el.zIndex)) + 1;
-                    objects.selected = obj;
-                    objects.dragged.obj = obj;
-                    objects.dragged.offsetX = listeners.mouse.x + (screen.x - obj.position.x) * screen.zoomScale;
-                    objects.dragged.offsetY = listeners.mouse.y + (screen.y - obj.position.y) * screen.zoomScale;
+                    obj.zIndex = Math.max(...objects.all.map(obj => { 
+                        obj.zIndex -= 1;
+                        return obj.zIndex;
+                    })) + 1;
+                    others.selected = obj;
+                    others.dragged.obj = obj;
+                    others.dragged.offsetX = listeners.mouse.x + (screen.x - obj.position.x) * screen.zoomScale;
+                    others.dragged.offsetY = listeners.mouse.y + (screen.y - obj.position.y) * screen.zoomScale;
                     break;
                 }
             }
         }
     } else if (listeners.mouse.mousereleased) {
         screen.stop = false;
-        objects.dragged.obj = null;
+        others.dragged.obj = null;
     }
 }
 
