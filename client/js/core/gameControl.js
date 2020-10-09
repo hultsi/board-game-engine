@@ -41,9 +41,9 @@ const dragObject = function dragObject() {
     const mx = listeners.mouse.x/screen.zoomScale + screen.x;
     const my = listeners.mouse.y/screen.zoomScale + screen.y;
     if (listeners.mouse.mouseclick) {
-        if (objects.selected)
-            objects.selected.isSelected = false;
-        objects.selected = null;
+        if (others.selected)
+            others.selected.isSelected = false;
+        others.selected = null;
         for (const obj of objects.all) {
             if (obj.isStatic)
                 continue;
@@ -68,7 +68,25 @@ const dragObject = function dragObject() {
         }
     } else if (listeners.mouse.mousereleased) {
         screen.stop = false;
-        others.dragged.obj = null;
+        // Snap to grid here
+        if (others.dragged.obj != null) {
+            const { position } = others.dragged.obj;
+            for (const el of game.grids.all) {
+                for (let row = 0; row < el.xN; ++row) {
+                    for (let col = 0; col < el.yN; ++col) {
+                        const xx = el.position.x + el.width*col - el.width/2;
+                        const yy = el.position.y + el.height*row - el.height/2;
+                        if (pointInRect(position.x, position.y, xx, yy, el.width, el.height)) {
+                            others.dragged.obj.position.x = el.position.x + el.width*col;
+                            others.dragged.obj.position.y = el.position.y + el.height*row;
+                        }
+                    }
+                }
+            }
+            // Then nullify the dragged obj
+            others.dragged.obj.beingDragged = false;
+            others.dragged.obj = null;
+        }
     }
 }
 
