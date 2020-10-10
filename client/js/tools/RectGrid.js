@@ -13,7 +13,7 @@ class RectGrid {
 
     getCoords(xi, yi) {
         const x = this.position.x + this.width * xi;
-        const y = this.position.x + this.height * yi;
+        const y = this.position.y + this.height * yi;
         return {x, y};
     }
 
@@ -45,7 +45,7 @@ class RectGrid {
             // horizontals
             ctx.moveTo(xx, yy + height*n);
             ctx.lineTo(xx + width * this.xN, yy + height*n);
-        }   
+        }
 
         ctx.stroke();
 

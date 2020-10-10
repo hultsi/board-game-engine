@@ -1,9 +1,10 @@
 const ConvexShape = require("./ConvexShape.js");
 
 class Hexagon extends ConvexShape {
-    constructor(position, img, radius, name, color = "#FFFFFF", lineWidth = 2, zIndex = 0) {
+    constructor(position, img, radius, name, color = "#FFFFFF", fill = "#FFFFFF", lineWidth = 2, zIndex = 0) {
         super(position, name, color, lineWidth, zIndex);
         this.radius = radius;
+        this.fill = fill;
         this.img = img;
     }
     
@@ -18,7 +19,8 @@ class Hexagon extends ConvexShape {
         ctx.save();
         ctx.lineWidth = this.lineWidth * scale;
         ctx.strokeStyle = this.color;
-        
+        ctx.fillStyle = this.fill;
+
         ctx.beginPath();
         ctx.moveTo(xx + radius * Math.cos(0), yy + radius * Math.sin(0));
         for (let side = 0; side < 7; side++) {
@@ -26,6 +28,8 @@ class Hexagon extends ConvexShape {
                         yy + radius * Math.sin(side * 2 * Math.PI / 6));
         }
         ctx.stroke();
+        ctx.fill();
+        
         ctx.restore();
     }
 };
