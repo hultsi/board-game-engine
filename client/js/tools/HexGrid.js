@@ -1,9 +1,9 @@
 class HexGrid {
-    constructor(position, radius, xN, yN, name, lineWidth = 1, color = "#FFFFFF", txtFill = "#FFFFFF") {
+    constructor(position, radius, rows, columns, name, lineWidth = 1, color = "#FFFFFF", txtFill = "#FFFFFF") {
         this.position = position;
         this.radius = radius;
-        this.xN = xN;
-        this.yN = yN;
+        this.columns = columns;
+        this.rows = rows;
         this.name = name;
         this.lineWidth = lineWidth;
         this.color = color;
@@ -11,13 +11,15 @@ class HexGrid {
     }
 
     getCoords(xi, yi) {
-        //Fix this and stuff works
+        // xOffset
         const xOffset = 2 * (3/4) * this.radius * xi;
+        // yOffset
         const evenOdd = ((xi % 2) * 2) - 1;
-        const yOffset = (1 + evenOdd) * Math.sqrt(3) * this.radius / 4;
+        const yAdd = (this.colums % 2 == 1 ? Math.sqrt(3) * this.radius : Math.sqrt(3) * this.radius / 2);
+        const yOffset = (1 + evenOdd) * Math.sqrt(3) * this.radius / 4 + 2*yAdd*yi;
+
         const x = this.position.x + xOffset;
         const y = this.position.y + yOffset;
-        //console.log(x,y);
         return {x, y};
     }
 
@@ -35,7 +37,7 @@ class HexGrid {
         let xInd = 0;
         let yInd = 0;
         let evenOdd = 1;
-        while (yInd < this.yN) {
+        while (yInd < this.rows) {
             const xx = x + radius;
             const yy = y + radius;
             ctx.beginPath();
@@ -50,7 +52,7 @@ class HexGrid {
             y += Math.sqrt(3) * radius / 2 * evenOdd; 
             evenOdd *= -1;
             ++xInd;
-            if (xInd == this.xN) {
+            if (xInd == this.columns) {
                 (evenOdd == 1 ? y += Math.sqrt(3) * radius : y += Math.sqrt(3) * radius / 2);
                 ++yInd;
                 evenOdd = 1;
@@ -66,8 +68,8 @@ class HexGrid {
         x = (this.position.x + offsetX) * scale;
         y = (this.position.y + offsetY) * scale;
         evenOdd = 1;
-        while (yText < this.yN) {
-            const txt = `(${xText}, ${yText})`;
+        while (yText < this.rows) {
+            const txt = `(${yText}, ${xText})`;
             const txtWidth = ctx.measureText(txt).width;
 
             ctx.fillText(txt, x + radius - txtWidth/2, y + radius);
@@ -75,7 +77,7 @@ class HexGrid {
             y += Math.sqrt(3) * radius / 2 * evenOdd;  
             ++xText;
             evenOdd *= -1;
-            if (xText == this.xN) {
+            if (xText == this.columns) {
                 (evenOdd == 1 ? y += Math.sqrt(3) * radius : y += Math.sqrt(3) * radius / 2);
                 x = (this.position.x + offsetX) * scale;
                 evenOdd = 1;

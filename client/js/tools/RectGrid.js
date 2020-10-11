@@ -1,10 +1,10 @@
 class RectGrid {
-    constructor(position, width, height, xN, yN, name, lineWidth = 1, color = "#FFFFFF", txtFill = "#FFFFFF") {
+    constructor(position, width, height, rows, columns, name, lineWidth = 1, color = "#FFFFFF", txtFill = "#FFFFFF") {
         this.position = position;
         this.width = width;
         this.height = height;
-        this.xN = xN;
-        this.yN = yN;
+        this.columns = columns;
+        this.rows = rows;
         this.name = name;
         this.lineWidth = lineWidth;
         this.color = color;
@@ -32,19 +32,19 @@ class RectGrid {
         ctx.beginPath();
         // Create outer rectangle
         ctx.moveTo(xx, yy);
-        ctx.lineTo(xx + width * this.xN, yy);
-        ctx.lineTo(xx + width * this.xN, yy + height * this.yN);
-        ctx.lineTo(xx, yy + height * this.yN);
+        ctx.lineTo(xx + width * this.columns, yy);
+        ctx.lineTo(xx + width * this.columns, yy + height * this.rows);
+        ctx.lineTo(xx, yy + height * this.rows);
         ctx.lineTo(xx, yy);
 
         // Create inner grid lines
-        for (let n = 1; n < this.xN; ++n) {
+        for (let n = 1; n < this.columns; ++n) {
             // verticals
             ctx.moveTo(xx + width*n, yy);
-            ctx.lineTo(xx + width*n, yy + height * this.yN);
+            ctx.lineTo(xx + width*n, yy + height * this.rows);
             // horizontals
             ctx.moveTo(xx, yy + height*n);
-            ctx.lineTo(xx + width * this.xN, yy + height*n);
+            ctx.lineTo(xx + width * this.columns, yy + height*n);
         }
 
         ctx.stroke();
@@ -53,13 +53,13 @@ class RectGrid {
         ctx.font = `${300*scale} ${13*scale}px Arial`;
         let xText = 0;
         let yText = 0;
-        while (yText < this.yN) {
-            const txt = `(${xText}, ${yText})`;
+        while (yText < this.rows) {
+            const txt = `(${yText}, ${xText})`;
             const txtWidth = ctx.measureText(txt).width;
 
             ctx.fillText(txt, xx + width*(xText + 1/2) - txtWidth/2, yy + height*(yText + 1/2)); 
             ++xText;
-            if (xText == this.xN) {
+            if (xText == this.columns) {
                 ++yText;
                 xText = 0;
             }
