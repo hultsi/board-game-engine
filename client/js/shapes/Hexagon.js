@@ -2,9 +2,8 @@ const ConvexShape = require("./ConvexShape.js");
 
 class Hexagon extends ConvexShape {
     constructor(position, img, radius, name, color = "#FFFFFF", fill = "#FFFFFF", lineWidth = 2, zIndex = 0) {
-        super(position, name, color, lineWidth, zIndex);
+        super(position, name, color, fill, lineWidth, zIndex);
         this.radius = radius;
-        this.fill = fill;
         this.img = img;
     }
     

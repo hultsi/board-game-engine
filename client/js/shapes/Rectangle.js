@@ -2,10 +2,9 @@ const ConvexShape = require("./ConvexShape.js");
 
 class Rectangle extends ConvexShape {
     constructor(position, img, width, height, name, color = "#FFFFFF", fill = "#FFFFFF", lineWidth = 2, zIndex = 0) {
-        super(position, name, color, lineWidth, zIndex);
+        super(position, name, color, fill, lineWidth, zIndex);
         this.width = width;
         this.height = height;
-        this.fill = fill;
         this.img = img;
     }
 

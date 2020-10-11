@@ -37,6 +37,7 @@ const startGame = function startGame() {
     // rect1.isStatic = false;
     const hex1 = new Hexagon({ x: 100, y: 100 }, null, 100, "hex1", "#FFFFFF", "#FFFFFF");
     hex1.isStatic = false;
+    hex1.snapGrids.push(grid2);
 
     // gameControl.createObject(rect1);
     gameControl.createObject(hex1);

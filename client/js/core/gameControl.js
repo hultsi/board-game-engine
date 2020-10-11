@@ -37,8 +37,20 @@ const zoomScreen = function zoomScreen() {
 
 
 const dragObject = function dragObject() {
-    // Needs to take into account screen offset
     const { screen, objects, others } = game;
+    const clickEffects = function clickEffects(screen, obj, others) {
+        screen.stop = true;
+        obj.beingDragged = true;
+        obj.isSelected = true;
+        obj.zIndex = Math.max(...objects.all.map(obj => { 
+            obj.zIndex -= 1;
+            return obj.zIndex;
+        })) + 1;
+        others.selected = obj;
+        others.dragged.obj = obj;
+        others.dragged.offsetX = listeners.mouse.x + (screen.x - obj.position.x) * screen.zoomScale;
+        others.dragged.offsetY = listeners.mouse.y + (screen.y - obj.position.y) * screen.zoomScale;
+    }
     const mx = listeners.mouse.x/screen.zoomScale + screen.x;
     const my = listeners.mouse.y/screen.zoomScale + screen.y;
     if (listeners.mouse.mouseclick) {
@@ -52,34 +64,14 @@ const dragObject = function dragObject() {
                 const {position, width, height} = obj;
                 if (pointInRect(mx, my, position.x, position.y, width, height)) {
                     // Mouse clicking on a rectangle, stop screen
-                    screen.stop = true;
-                    obj.beingDragged = true;
-                    obj.isSelected = true;
-                    obj.zIndex = Math.max(...objects.all.map(obj => { 
-                        obj.zIndex -= 1;
-                        return obj.zIndex;
-                    })) + 1;
-                    others.selected = obj;
-                    others.dragged.obj = obj;
-                    others.dragged.offsetX = listeners.mouse.x + (screen.x - obj.position.x) * screen.zoomScale;
-                    others.dragged.offsetY = listeners.mouse.y + (screen.y - obj.position.y) * screen.zoomScale;
+                    clickEffects(screen, obj, others);
                     break;
                 }
             } else if (obj.constructor.name == "Hexagon") {
                 const {position, radius} = obj;
                 if (pointInHex(mx, my, position.x, position.y, radius)) {
-                    // Mouse clicking on a rectangle, stop screen
-                    screen.stop = true;
-                    obj.beingDragged = true;
-                    obj.isSelected = true;
-                    obj.zIndex = Math.max(...objects.all.map(obj => { 
-                        obj.zIndex -= 1;
-                        return obj.zIndex;
-                    })) + 1;
-                    others.selected = obj;
-                    others.dragged.obj = obj;
-                    others.dragged.offsetX = listeners.mouse.x + (screen.x - obj.position.x) * screen.zoomScale;
-                    others.dragged.offsetY = listeners.mouse.y + (screen.y - obj.position.y) * screen.zoomScale;
+                    // Mouse clicking on a hex, stop screen
+                    clickEffects(screen, obj, others);
                     break;
                 }
             }
@@ -88,7 +80,7 @@ const dragObject = function dragObject() {
         screen.stop = false;
         // Snap to grid here
         if (others.dragged.obj != null) {
-            for (const el of game.grids.all) {
+            for (const el of others.dragged.obj.snapGrids) {
                 gridMap.snapToGrid(others.dragged.obj, el);
             }
             // Then nullify the dragged obj
