@@ -14,7 +14,10 @@ module.exports = {
 		"quotes": [ "error", "double" ],
 		"semi": [ "error", "always" ],
 		"no-eval": [ "error" ],
-		"no-magic-numbers": ["error", { "ignoreArrayIndexes": true }],
 		"func-names": ["error", "always"],
+		"no-var": "error",
+		"no-constant-condition": "error",
+		"no-await-in-loop": "error",
+		"eqeqeq": ["error", "always"],
 	}
 };

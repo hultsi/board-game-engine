@@ -1,12 +1,22 @@
-const app = require("express")();
+// const bodyParser = require("body-parser");
+const express = require("express");
+const http = require("http");
+const socketIo = require("socket.io");
 
-const PORT = 5000;
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+const PORT = 5000 || process.env.PORT;
 
 app.get("/",(req,res) => {
-	console.log(req);
-	res.send("hello");
+	res.sendFile("/home/hultsi/programming/javascript/board-game/server/public/index.html");
 });
 
-app.listen(PORT, () => {
-	console.log(`Listening port ${PORT}`);
+io.on("connection", () => {
+	console.log("hmm");
+});
+
+server.listen(PORT, () => {
+	console.log(`Listening to port ${PORT}`);
 });
