@@ -7,17 +7,21 @@ class ImageCollection {
     load(list, callback) {
         let total = this.total;
 
-        for(let i = 0; i < list.length; i++){
-            let img = new Image();
-            this.images[list[i].name] = img;
-            img.addEventListener("load", () => {
-                total++;
-                if(total == list.length){
-                    callback && callback();
-                }
-            });
-            img.src = list[i].url;
-        }
+		if (list.length > 0) {
+			for(let i = 0; i < list.length; i++){
+				let img = new Image();
+				this.images[list[i].name] = img;
+				img.addEventListener("load", () => {
+					total++;
+					if(total == list.length){
+						callback && callback();
+					}
+				});
+				img.src = list[i].url;
+			}
+		} else {
+			callback && callback();
+		}
     }
 
     get(name){
