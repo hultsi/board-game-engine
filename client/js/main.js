@@ -11,9 +11,9 @@ const grid = require("./helpers/grid.js");
 //      which defines what grids the object should snap to!
 
 // Define all program related images here
-let imagePaths = [{
-    name: "main_map", url: "../TM_map.jpeg"
-}];
+let imagePaths = [
+	{ name: "main_map", url: "../TM_map.jpeg"}
+];
 
 const startGame = function startGame() {
     // Set up the game here
