@@ -1,22 +1,26 @@
 // const bodyParser = require("body-parser");
 const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
+
+const socketIo = require("./socketIo/socketIo.js");
+const route_index = require("./routes/index.js");
+const route_other = require("./routes/other.js");
 
 const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo.initSocketIo(app);
 
-const PORT = 5000 || process.env.PORT;
+const PORT = 5000 || Number(process.env.PORT);
+const STATIC_FOLDER = "/home/hultsi/programming/javascript/board-game/server/build";
 
-app.get("/",(req,res) => {
-	res.sendFile("/home/hultsi/programming/javascript/board-game/server/public/index.html");
+app.use(express.static(STATIC_FOLDER));
+app.use("/", route_index);
+app.use("/other", route_other);
+
+socketIo.createNamespace("/game_123");
+socketIo.addNamespaceListener("/game_123", "connection", (socket) => {
+	console.log("Client connected");
+	socket.emit("initiateGame","Hello there");
 });
 
-io.on("connection", () => {
-	console.log("hmm");
-});
-
-server.listen(PORT, () => {
-	console.log(`Listening to port ${PORT}`);
+socketIo.socket.server.listen(PORT, () => {
+    console.log(`Listening to port ${PORT}`);
 });
