@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
+    "init": "tsc --init",
     "start": "nodemon main.js",
     "lint": "eslint ./"
   },
