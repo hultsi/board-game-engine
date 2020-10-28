@@ -1,12 +1,14 @@
 const express = require("express");
 const route = express.Router();
 
+const HTML_ROOT = `${__dirname}/../build/html`;
+
 route.get("/create", (req,res) => {
-	res.sendFile("/home/hultsi/programming/javascript/board-game/server/build/html/createGame.html");
+	res.sendFile("createGame.html", { root: HTML_ROOT});
 });
 
 route.get("/join", (req,res) => {
-	res.sendFile("/home/hultsi/programming/javascript/board-game/server/build/html/joinGame.html");
+	res.sendFile("joinGame.html", { root: HTML_ROOT});
 });
 
 module.exports = route;

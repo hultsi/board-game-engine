@@ -9,7 +9,7 @@ const app = express();
 socketIo.initSocketIo(app);
 
 const PORT = Number(process.env.PORT) || 5000;
-const STATIC_FOLDER = "/home/hultsi/programming/javascript/board-game/server/build";
+const STATIC_FOLDER = `${__dirname}/build`;
 
 app.use(express.static(STATIC_FOLDER));
 app.use("/", route_index);
