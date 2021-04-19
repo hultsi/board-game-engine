@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const route = express.Router();
 const jsonParser = bodyParser.json();
 
-const HTML_ROOT = `${__dirname}/../build/html`;
+const HTML_ROOT = `${__dirname}/../build/game-init/html`;
 const gameList = [
 	{
 		id: "1234",
@@ -22,7 +22,7 @@ route.post("/create", jsonParser, (req,res) => {
 	if (gameList.find(el => el.id === gameId)) {
 		res.send(false);
 	} else {
-		gameList.push({ id: gameId, playerCount: 0 });
+		gameList.push({ id: gameId, playerCount: 1 });
 		res.send(true);
 	}
 });

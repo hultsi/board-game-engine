@@ -1,7 +1,7 @@
 const express = require("express");
 const route = express.Router();
 
-const HTML_ROOT = `${__dirname}/../build/html`;
+const HTML_ROOT = `${__dirname}/../build/game-init/html`;
 
 route.get("/create", (req,res) => {
 	res.sendFile("createGame.html", { root: HTML_ROOT});
