@@ -4,6 +4,7 @@ const express = require("express");
 const socketIo = require("./socketIo/socketIo.js");
 const route_index = require("./routes/index.js");
 const route_game = require("./routes/game.js");
+const route_login = require("./routes/login.js");
 
 const app = express();
 socketIo.initSocketIo(app);
@@ -14,6 +15,7 @@ const STATIC_FOLDER = `${__dirname}/build`;
 app.use(express.static(STATIC_FOLDER));
 app.use("/", route_index);
 app.use("/game", route_game);
+app.use("/login", route_login);
 
 socketIo.createNamespace("/game_123");
 socketIo.addNamespaceListener("/game_123", "connection", (socket) => {
