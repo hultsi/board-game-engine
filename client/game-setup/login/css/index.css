@@ -1,0 +1,48 @@
+body {
+	position: relative;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.page-body {
+	position: relative;
+	width: 100%;
+}
+
+.page-content {
+	position: relative;
+	width: 280px;
+	left: 50%;
+	top: 100px;
+	transform: translateX(-50%);
+	border: solid #000 1px;
+}
+
+.form-box {
+	position: relative;
+	width: 100%;
+}
+
+.form-box-title {
+	position: relative;
+	width: 30%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.form-box-form {
+	position: relative;
+	display: inline-block;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.form-submit {
+	position: relative;
+	margin-top: 15px;
+	margin-bottom: 5px;
+	width: 60px;
+	height: 30px;
+	left: 82%;
+	transform: translateX(-50%);
+}

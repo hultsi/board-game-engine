@@ -5,7 +5,7 @@ const config = {
     mode: "development", // "production" | "development" | "none"
     
     entry: [
-        "./js/main.js",
+        "./game/js/main.js",
     ], // string | object | array
     
     output: {
@@ -16,8 +16,9 @@ const config = {
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
-                { from: './html', to: "./" },
-                { from: './css', to: "./css" },
+                { from: './game/html', to: "./" },
+				{ from: './game/css', to: "./css" },
+				{ from: './game/assets', to: "./assets" },
             ]
         }),       
     ],

@@ -12,7 +12,7 @@ const grid = require("./helpers/grid.js");
 
 // Define all program related images here
 let imagePaths = [
-	{ name: "main_map", url: "../TM_map.jpeg"}
+	{ name: "main_map", url: "./assets/imgs/TM_map.jpeg"}
 ];
 
 const startGame = function startGame() {
@@ -52,7 +52,7 @@ const startGame = function startGame() {
         screen.draw();
         // And then everything else
         grid.drawGrid(screen.ctx, -screen.x, -screen.y, screen.ctx.canvas.width, screen.ctx.canvas.height, screen.zoomScale, 20, "rgba(0,255,0,.5)");
-        //grid.drawHexGrid(screen.ctx, -screen.x, -screen.y, screen.ctx.canvas.width, screen.ctx.canvas.height, screen.zoomScale, 50, "rgba(0,255,0,.5)");
+        // grid.drawHexGrid(screen.ctx, -screen.x, -screen.y, screen.ctx.canvas.width, screen.ctx.canvas.height, screen.zoomScale, 50, "rgba(0,255,0,.5)");
         grid.drawCoordinates(screen.ctx, -screen.x, -screen.y, 200, screen.zoomScale);
         gameUpdate.drawAll();
     }, 34);
