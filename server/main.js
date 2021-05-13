@@ -10,9 +10,10 @@ const app = express();
 socketIo.initSocketIo(app);
 
 const PORT = Number(process.env.PORT) || 5000;
-const STATIC_FOLDER = `${__dirname}/build`;
+const STATIC_FOLDER_LOGIN = `${__dirname}/../client/game-setup/`;
 
-app.use(express.static(STATIC_FOLDER));
+app.use(express.static(STATIC_FOLDER_LOGIN));
+
 app.use("/", route_index);
 app.use("/game", route_game);
 app.use("/login", route_login);

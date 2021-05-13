@@ -18,22 +18,14 @@ const loginPOST = function loginPOST() {
 		headers: {
 			"Content-type": "application/json; charset=UTF-8",
 		},
+	}).then(async ans => {
+		const body = await ans.json();
+		console.log(body);
 	});
 };
 
 loginBtn.addEventListener("click", () => {
 	loginPOST();
-});
-
-loginBtn.addEventListener("keydown", (ev) => {
-	if (ev.code === "Enter" && !keyDown) {
-		loginPOST();
-	}
-	keyDown = true;
-});
-
-loginBtn.addEventListener("keyup", () => {
-	keyDown = false;
 });
 
 pwdInp.addEventListener("keydown", (ev) => {
@@ -43,10 +35,6 @@ pwdInp.addEventListener("keydown", (ev) => {
 	keyDown = true;
 });
 
-pwdInp.addEventListener("keyup", () => {
-	keyDown = false;
-});
-
 usrInp.addEventListener("keydown", (ev) => {
 	if (ev.code === "Enter" && !keyDown) {
 		loginPOST();
@@ -54,6 +42,6 @@ usrInp.addEventListener("keydown", (ev) => {
 	keyDown = true;
 });
 
-usrInp.addEventListener("keyup", () => {
+document.addEventListener("keyup", () => {
 	keyDown = false;
 });

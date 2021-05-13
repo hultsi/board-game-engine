@@ -2,7 +2,7 @@ const express = require("express");
 const route = express.Router();
 const bodyParser = require("body-parser");
 
-const HTML_ROOT = `${__dirname}/../build/game-init/html`;
+const HTML_ROOT = `${__dirname}/../../client/game-setup/game-init/html`;
 
 const jsonParser = bodyParser.json();
 
