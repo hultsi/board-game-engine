@@ -1,4 +1,4 @@
-const { pointInRect } = require("../helpers/collision.js");
+const { pointInRect, pointInHex } = require("../helpers/collision.js");
 
 const snapToGrid = function snapToGrid(obj, grid) {
     const { position } = obj;
@@ -15,10 +15,10 @@ const snapToGrid = function snapToGrid(obj, grid) {
     } else if (grid.constructor.name = "HexGrid") {
         for (let row = 0; row < grid.rows; ++row) {
             for (let col = 0; col < grid.columns; ++col) {
-                const pos = grid.getCoords(col,row);
+				const pos = grid.getCoords(col,row);
                 const xx = pos.x;
-                const yy = pos.y;
-                if (pointInRect(position.x, position.y, xx-grid.radius, yy-grid.radius, 2*grid.radius, 2*grid.radius)) {
+				const yy = pos.y;
+                if (pointInHex(position.x + obj.radius, position.y + obj.radius, xx, yy, grid.radius)) {
                     obj.position = pos;
                 }
             }
