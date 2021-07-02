@@ -15,7 +15,7 @@ const isValidAuth = async function isValidAuth(req, res, next) {
 		next();
 	} else {
 		console.log("Failed");
-		res.send({ err: "Try again" });
+		res.send({ err: null, loggedIn: false});
 	}
 };
 
@@ -24,7 +24,7 @@ route.get("/", (req,res) => {
 });
 
 route.post("/", isValidAuth, (req,res) => {
-	res.send({ err: null, result: "well done dude"});
+	res.send({ err: null, loggedIn: true});
 });
 
 module.exports = route;
