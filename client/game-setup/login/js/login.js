@@ -20,7 +20,14 @@ const loginPOST = function loginPOST() {
 		},
 	}).then(async ans => {
 		const body = await ans.json();
-		console.log(body);
+		if (body.loggedIn) {
+			// Send req to move to main.html
+			window.location.href = "http://localhost:5000/mainMenu"
+		} else {
+			// Show error msg
+			const divErr = document.getElementById("login-err");
+			divErr.innerHTML = "Incorrect credentials";
+		}
 	});
 };
 

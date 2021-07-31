@@ -35,7 +35,7 @@ class UserSQLHandle {
 	async deleteUser(username) {
 		const values = [username];
 		const res = await this.pool.query(`delete from ${this.table} where username = $1`, values);
-		if (!res.rowCounts)
+		if (!res.rowCount)
 			return false;
 		return true;
 	}
@@ -47,6 +47,15 @@ class UserSQLHandle {
 		if (await argon2.verify(user[0].password, password))
 			return true;
 		return false;
+	}
+
+	async getUserId(username) {
+		const values = [username];
+		const res = await this.pool.query("select user_id from accounts where username = $1", values);
+
+		if (!res.rowCount)
+			return null;
+		return res.rows[0].user_id;
 	}
 	// async updateUser(username) {
 	// 	// todo

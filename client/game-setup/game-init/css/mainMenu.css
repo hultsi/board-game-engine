@@ -1,0 +1,50 @@
+body {
+	position: relative;
+    margin: 0px;
+	overflow: hidden;
+}
+
+.page-header {
+	position: relative;
+	width: 100%;
+}
+
+.header-text {
+	display: inline-block;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.page-body {
+	position: relative;
+	width: 100%;
+}
+
+.page-content {
+	position: relative;
+	width: 280px;
+	left: 50%;
+	top: 100px;
+	transform: translateX(-50%);
+}
+
+.buttons {
+	display: grid;
+	grid-template-areas:
+		'btn-left btn-right';
+}
+
+#create-game-btn {
+	position: relative;
+	left: 5%;
+	width: 90%;
+	grid-area: btn-left;
+}
+
+#join-game-btn {
+	position: relative;
+	left: 5%;
+	width: 90%;
+	grid-area: btn-right;
+}

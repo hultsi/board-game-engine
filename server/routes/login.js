@@ -11,10 +11,8 @@ route.use(express.json());
 
 const isValidAuth = async function isValidAuth(req, res, next) {
 	if (await userSql.credentialsMatch(req.body.username, req.body.password)) {
-		console.log("Match!");	
 		next();
 	} else {
-		console.log("Failed");
 		res.send({ err: null, loggedIn: false});
 	}
 };
@@ -23,7 +21,10 @@ route.get("/", (req,res) => {
 	res.sendFile("login.html", { root: HTML_ROOT});
 });
 
-route.post("/", isValidAuth, (req,res) => {
+route.post("/", isValidAuth, async (req,res) => {
+	if (!req.session.userId) {
+		req.session.userId = await userSql.getUserId(req.body.username);
+	}
 	res.send({ err: null, loggedIn: true});
 });
 
