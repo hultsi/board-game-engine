@@ -6,19 +6,21 @@ const HTML_ROOT = `${__dirname}/../../client/game-setup/game-init/html`;
 
 const jsonParser = bodyParser.json();
 
-route.get("/create", (req,res) => {
+let gameList = [];
+
+route.get("/:gameId", (req,res) => {
+	console.log(req.body.gameId);
 	res.sendFile("createGame.html", { root: HTML_ROOT});
 });
 
-route.post("/create", jsonParser, (req) => {
-	const { gameId } = req.body;
-	console.log("Trying to create game " + gameId);
-	// if (gameList.find(el => el.id === gameId)) {
-	// 	res.send(false);
-	// } else {
-	// 	gameList.push({ id: gameId, playerCount: 1 });
-	// 	res.send(true);
-	// }
+route.post("/", jsonParser, (req, res) => {
+	const { gameName } = req.body;
+	const gameId = "asd123";
+
+	console.log("Trying to create game " + gameName);
+
+	gameList.push({ id: gameId, name: gameName, playerCount: 1 });
+	res.send({ id: gameId, name: gameName, playerCount: 1 });
 });
 
 // route.get("/join", (req,res) => {

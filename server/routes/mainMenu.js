@@ -11,5 +11,9 @@ route.get("/", (req,res) => {
 	res.sendFile("mainMenu.html", { root: HTML_ROOT});
 });
 
+route.post("/createGame", (req, res) => {
+	res;
+});
+
 
 module.exports = route;
