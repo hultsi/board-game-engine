@@ -10,7 +10,7 @@ createGame.addEventListener("click", () => {
 	fetch(endpoint, { 
 		method: "post",
 		body: JSON.stringify({
-			msg: gameName
+			gameName: gameName
 		}),
 		headers: {
 			"Content-type": "application/json; charset=UTF-8",
@@ -18,7 +18,8 @@ createGame.addEventListener("click", () => {
 	}).then(async ans => {
 		const body = await ans.json();
 		// Send req to move to main.html
-		window.location.href = `http://localhost:5000/create/${body.gameId}`;
+		if (body.success)
+			window.location.href = `http://localhost:5000/create/${body.gameId}`;
 	});	
 });
 

@@ -14,7 +14,7 @@ const app = express();
 socketIo.initSocketIo(app);
 
 const PORT = Number(process.env.PORT) || 5000;
-const STATIC_FOLDER_LOGIN = `${__dirname}/../client/game-setup/`;
+const STATIC_FOLDER_LOGIN = `${__dirname}/../client/build/other/`;
 
 // todo: save sessions to sql
 app.use(express.static(STATIC_FOLDER_LOGIN));

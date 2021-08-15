@@ -1,41 +1,39 @@
 const express = require("express");
 const route = express.Router();
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 
-const HTML_ROOT = `${__dirname}/../../client/game-setup/game-init/html`;
+const { gameList } = require("./resources/gameList.js");
 
-const jsonParser = bodyParser.json();
+const HTML_ROOT = `${__dirname}/../../client/build/other/html`;
 
-let gameList = [];
+// const jsonParser = bodyParser.json();
 
 route.get("/:gameId", (req,res) => {
-	console.log(req.body.gameId);
-	res.sendFile("createGame.html", { root: HTML_ROOT});
+	let gameExists = false;
+	for (let i = 0; i < gameList.length; ++i) {
+		if (gameList[i].id === req.params.gameId) {
+			gameExists = true;
+			break;
+		}
+	}
+	if (gameExists)
+		res.sendFile("createGame.html", { root: HTML_ROOT});
+	else
+		res.redirect("../mainMenu");
 });
 
-route.post("/", jsonParser, (req, res) => {
-	const { gameName } = req.body;
-	const gameId = "asd123";
-
-	console.log("Trying to create game " + gameName);
-
-	gameList.push({ id: gameId, name: gameName, playerCount: 1 });
-	res.send({ id: gameId, name: gameName, playerCount: 1 });
+route.post("/:gameId/info", (req,res) => {
+	let game = {};
+	for (let i = 0; i < gameList.length; ++i) {
+		if (gameList[i].id === req.params.gameId) {
+			game = gameList[i];
+			break;
+		}
+	}
+	console.log(game);
+	if (game) {
+		res.send({ err: null, game });
+	}
 });
-
-// route.get("/join", (req,res) => {
-// 	res.sendFile("joinGame.html", { root: HTML_ROOT});
-// });
-
-// route.post("/join", jsonParser, (req,res) => {
-// 	const { gameId } = req.body;
-// 	// const game = gameList.find(el => el.id === gameId);
-// 	// if (game) {
-// 	// 	console.log("Game id ok: " + gameId);
-// 	// 	res.send({ txt: "Joining game lobby..." });
-// 	// } else {
-// 	// 	res.send({ txt: "Some day you'll be able to join" });
-// 	// }
-// });
 
 module.exports = route;

@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const UserSQLHandle = require("../sql_objects/UserSQLHandle");
 
 const route = express.Router();
-const HTML_ROOT = `${__dirname}/../../client/game-setup/login/html`;
+const HTML_ROOT = `${__dirname}/../../client/build/other/html`;
 const userSql = new UserSQLHandle("accounts");
 
 route.use(bodyParser.urlencoded({ extended: true }));

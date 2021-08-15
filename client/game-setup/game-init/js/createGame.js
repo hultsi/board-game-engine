@@ -1,13 +1,11 @@
 const createGameBtn = document.getElementById("create-game-btn");
-const createGameInput = document.getElementById("create-game-input");
 
-const createGame = async function createGame() {
-	const gameId = document.getElementById("create-game-input").value;
-	if (gameId.length < 4) {
-		return false;
-	}
-	const root = "http://localhost:5000";
-	const resp = await fetch(`${root}/game/create`, {
+const getGameInfo = async function getGameInfo() {
+	const gameId = window.location.pathname.split("/")[2];
+	document.getElementById("game-id-field").innerHTML = gameId;
+
+	const reqPath = `http://localhost:5000/create/${gameId}/info`;
+	const resp = await fetch(`${reqPath}`, {
 		method: "post",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8"
@@ -15,13 +13,7 @@ const createGame = async function createGame() {
 		body: JSON.stringify({ gameId })
 	}).then(response => response.json());
 
-	console.log(resp);
-	window.location.replace(`${root}/game`);
-	return true;	
+	document.getElementById("game-name-field").innerHTML = resp.game.name;
 };
-
-createGameInput.addEventListener("keydown", (e) => {
-	if (e.key === "Enter")
-		createGame();
-});
-createGameBtn.addEventListener("click", createGame);
+getGameInfo();
+//createGameBtn.addEventListener("click", createGame);

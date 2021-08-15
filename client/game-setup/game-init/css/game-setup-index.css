@@ -11,7 +11,7 @@ body {
 
 .page-content {
 	position: relative;
-	width: 280px;
+	width: 380px;
 	left: 50%;
 	top: 100px;
 	transform: translateX(-50%);
@@ -41,7 +41,7 @@ body {
 	position: relative;
 	margin-top: 15px;
 	margin-bottom: 5px;
-	width: 60px;
+	width: 80px;
 	height: 30px;
 	left: 82%;
 	transform: translateX(-50%);

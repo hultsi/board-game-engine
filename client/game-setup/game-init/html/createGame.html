@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="./game-init/css/index.css">
+        <link rel="stylesheet" type="text/css" href="../css/game-setup-index.css">
     </head>
     <body>
         <div class="page-body">
@@ -12,9 +12,10 @@
 				<div class="form-box">
 					<p class="form-box-title">Create game</p>
 					<span class="form-box-form">
-						<span>Game ID: </span></br>
-						<input type="text" name="game_id" id="create-game-input"/></br>
-						<input type="button" class="form-submit" id="create-game-btn" value="Create"/>
+						<span>Game ID: <span id="game-id-field"></span></span></br>
+						<span>Game name: <span id="game-name-field">_name_here_</span></span></br>
+						<p class="form-box-title"><u>Players:</u></p>
+						<input type="button" class="form-submit" id="create-game-btn" value="Start game"/>
 					</span>
 				</div>
             </div>
@@ -22,6 +23,6 @@
 
             </div>
         </div>
-		<script src="./game-init/js/createGame.js"></script>
+		<script src="../js/createGame.js"></script>
     </body>
 </html>
