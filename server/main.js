@@ -3,7 +3,6 @@ const express = require("express");
 const session = require("express-session");
 
 const socketIo = require("./socketIo/socketIo.js");
-const route_create = require("./routes/create.js");
 const route_game = require("./routes/game.js");
 const route_login = require("./routes/login.js");
 const route_mainMenu = require("./routes/mainMenu.js");
@@ -32,7 +31,6 @@ app.use(session({
 app.use(isLoggedIn);
 app.use("/login", route_login);
 app.use("/mainMenu", route_mainMenu);
-app.use("/create", route_create);
 app.use("/game", route_game);
 
 socketIo.createNamespace("/game_123");

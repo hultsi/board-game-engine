@@ -19,7 +19,7 @@ createGame.addEventListener("click", () => {
 		const body = await ans.json();
 		// Send req to move to main.html
 		if (body.success)
-			window.location.href = `http://localhost:5000/create/${body.gameId}`;
+			window.location.href = `http://localhost:5000/game/setup/${body.gameId}`;
 	});	
 });
 

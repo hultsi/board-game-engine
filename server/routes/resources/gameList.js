@@ -1,4 +1,4 @@
-const { createUniqueId } = require("../tools/random.js");
+const { createUniqueId } = require("../../tools/random.js");
 
 // todo: move list to sql
 let gameList = [];
