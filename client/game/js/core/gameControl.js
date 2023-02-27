@@ -79,7 +79,7 @@ const dragObject = function dragObject() {
     } else if (listeners.mouse.mousereleased) {
         screen.stop = false;
         // Snap to grid here
-        if (others.dragged.obj != null) {
+        if (others.dragged.obj !== null) {
             for (const el of others.dragged.obj.snapGrids) {
                 gridMap.snapToGrid(others.dragged.obj, el);
             }
