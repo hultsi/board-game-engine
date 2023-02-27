@@ -28,19 +28,23 @@ const startGame = function startGame() {
     screen.setBackgroundColor("#000000");
     screen.preventContextMenu();
 
-    const grid1 = new RectGrid({x: 100, y: 100}, 100, 100, 2, 2, "rect_grid_1", 2, "#FF00FF");
-    const grid2 = new HexGrid({x: 300, y: 100}, 100, 3, 3, "hex_grid_1", 2, "#FF00FF");
+    const grid1 = new RectGrid({x: 100, y: 100}, 100, 100, 2, 2, "rect_grid_1", 1, "#FF00FF");
+    const grid2 = new RectGrid({x: 100, y: -200}, 100, 100, 2, 2, "rect_grid_2", 1, "#FF00FF");
+    const grid3 = new HexGrid({x: 300, y: 100}, 100, 3, 3, "hex_grid_1", 1, "#FF00FF");
     gameControl.createGrid(grid1);
     gameControl.createGrid(grid2);
+    gameControl.createGrid(grid3);
     
-    // const rect1 = new Rectangle(grid1.getCoords(1,0), null, 100, 100, "rect1", "#FFFFFF", "#FFFFFF", 2);
-    // rect1.isStatic = false;
-    const hex1 = new Hexagon({ x: 100, y: 100 }, null, 100, "hex1", "#FFFFFF", "#FFFFFF");
+    const hex1 = new Hexagon({ x: 100, y: 300 }, null, 100, "hex1", "#FFFFFF", "#FFFFFF");
     hex1.isStatic = false;
-    hex1.snapGrids.push(grid2);
-
-    // gameControl.createObject(rect1);
+    hex1.snapGrids.push(grid3);
     gameControl.createObject(hex1);
+
+    const rect1 = new Rectangle({ x: 100, y: 100 }, null, 100, 100, "rect1", "#FFFFFF", "#FFFFFF");
+    rect1.isStatic = false;
+    rect1.snapGrids.push(grid1);
+    rect1.snapGrids.push(grid2);
+    gameControl.createObject(rect1);
 
     // Then run the main loop
     const mainLoopId = window.setInterval(() => {

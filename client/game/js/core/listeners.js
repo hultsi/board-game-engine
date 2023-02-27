@@ -77,26 +77,60 @@ const mouseWheel = function mouseWheel(ev) {
 
 const enableKeyListeners = function enableKeyListeners(enable) {
     if (enable) {
-        window.addEventListener("keydown", keyDown, false);
-        window.addEventListener("keyup", keyUp, false);
+        addListener(window, "keydown", keyDown);
+        addListener(window, "keyup", keyUp);
     } else {
-        window.removeEventListener("keydown",keyDown, false);
-        window.removeEventListener("keyup", keyUp, false);
+        removeListener(window, "keydown", keyDown);
+        removeListener(window, "keyup", keyUp);
     }
 }
 
 const enableMouseListeners = function enableMouseListeners(enable) {
     if (enable) {
-        window.addEventListener("mousedown", mouseDown, false);
-        window.addEventListener('mousemove', mouseMoved, false);
-        window.addEventListener("mouseup", mouseUp, false);
-        window.addEventListener("wheel", mouseWheel, false);
+        addListener(window, "mousedown", mouseDown);
+        addListener(window, "mousemove", mouseMoved);
+        addListener(window, "mouseup", mouseUp);
+        addListener(window, "wheel", mouseWheel);
     } else {
-        window.removeEventListener("mousedown", mouseDown, false);
-        window.removeEventListener('mousemove', mouseMoved, false);
-        window.removeEventListener("mouseup", mouseUp, false);
-        window.removeEventListener("wheel", mouseWheel, false);
+        addListener(window, "mousedown", mouseDown);
+        addListener(window, "mousemove", mouseMoved);
+        addListener(window, "mouseup", mouseUp);
+        addListener(window, "wheel", mouseWheel);
     }
+}
+
+const addListener = function addListener(theListener, type, callback) {
+    console.log(
+        "Adding listener to " + 
+        `%c${theListener.constructor.name} ` +
+        "%cwith a type of " +
+        `%c${type} ` +
+        "%cand a name of " +
+        `%c${callback.name}`,
+        "color:cyan",
+        "color:white",
+        "color:orange",
+        "color:white",
+        "color:yellow",
+    );
+    theListener.addEventListener(type, callback);
+}
+
+const removeListener = function removeListener(theListener, type, callback) {
+    console.log(
+        "Removing listener from " + 
+        `%c${theListener.constructor.name} ` +
+        "%cwith a type of " +
+        `%c${type} ` +
+        "%cand a name of " +
+        `%c${callback.name}`,
+        "color:cyan",
+        "color:white",
+        "color:orange",
+        "color:white",
+        "color:yellow",
+    );
+    theListener.removeEventListener(type, callback);
 }
 
 module.exports = {
@@ -105,4 +139,6 @@ module.exports = {
     enableKeyListeners,
     enableMouseListeners,
     updateEnd,
+    addListener,
+    removeListener,
 };

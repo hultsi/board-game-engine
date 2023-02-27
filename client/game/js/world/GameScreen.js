@@ -1,3 +1,5 @@
+const { addListener, removeListener } = require("../core/listeners.js");
+
 class GameScreen {
     constructor(canvasId) {
         this.x = 0;
@@ -11,6 +13,8 @@ class GameScreen {
         this.ctx = null;
         this.bgColor = null;
         this.stop = false;
+
+        this.gameScreenResize = this.gameScreenResize.bind(this);
     }
 
     createCanvas(width, height) {
@@ -52,21 +56,33 @@ class GameScreen {
         }
     }
 
-    fitCanvasToBrowserView() {
+    fitCanvasToBrowserView(fit = true) {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         
-        window.addEventListener("resize",() => {
-            this.canvas.width = window.innerWidth;
-            this.canvas.height = window.innerHeight;
-            this.draw();
-        });
+        if (fit) {
+            addListener(window, "resize", this.gameScreenResize);
+        } else {
+            removeListener(window, "resize", this.gameScreenResize);
+        }
     }
+    
+    preventContextMenu(prevent = true) {
+        if (prevent) {
+            addListener(this.canvas, "contextmenu", this.preventContextMenu);
+        } else {
+            removeListener(this.canvas, "contextmenu", this.preventContextMenu);
+        }
+    }
+    
+    gameScreenResize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.draw();
+    };
 
-    preventContextMenu() {
-        this.canvas.addEventListener("contextmenu", (ev) => {
-            ev.preventDefault();
-        });
+    preventGameScreenContextMenu(ev) {
+        ev.preventDefault();
     }
 };
 
