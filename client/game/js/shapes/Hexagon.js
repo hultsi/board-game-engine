@@ -1,4 +1,4 @@
-const ConvexShape = require("./ConvexShape.js");
+const { ConvexShape, Shapes } = require("./ConvexShape.js");
 
 class Hexagon extends ConvexShape {
     constructor(position, img, radius, name, color = "#FFFFFF", fill = "#FFFFFF", lineWidth = 2, zIndex = 0) {
@@ -10,13 +10,13 @@ class Hexagon extends ConvexShape {
     update() {
     }
 
-    draw(ctx, offsetX, offsetY, scale) {
-        const xx = (this.position.x + this.radius + offsetX) * scale;
-        const yy = (this.position.y + this.radius + offsetY) * scale;
-        const radius = this.radius * scale;
+    draw(ctx) {
+        const xx = (this.position.x + this.radius + this.screenOffset.x) * this.screenScale;
+        const yy = (this.position.y + this.radius + this.screenOffset.y) * this.screenScale;
+        const radius = this.radius * this.screenScale;
         
         ctx.save();
-        ctx.lineWidth = this.lineWidth * scale;
+        ctx.lineWidth = this.lineWidth * this.screenScale;
         ctx.strokeStyle = this.color;
         ctx.fillStyle = this.fill;
 

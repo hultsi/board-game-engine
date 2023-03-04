@@ -60,7 +60,7 @@ const dragObject = function dragObject() {
         for (const obj of objects.all) {
             if (obj.isStatic)
                 continue;
-            if (obj.constructor.name == "Rectangle") {
+            if (obj.constructor.name == "Rectangle" || obj.__proto__.__proto__.constructor.name == "Rectangle") {
                 const {position, width, height} = obj;
                 if (pointInRect(mx, my, position.x, position.y, width, height)) {
                     // Mouse clicking on a rectangle, stop screen

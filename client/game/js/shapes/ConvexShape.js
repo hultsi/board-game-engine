@@ -1,7 +1,25 @@
 const { sortObjectsByZIndex } = require("../core/gameControl.js");
 
+/**
+ * Todo: Should this be elsewhere?
+ * @param {key values to enumerate} arr 
+ * @returns enumeration object
+ */
+const Enum = function Enum(arr) {
+    let obj = {};
+    for (let i = 0; i < arr.length; ++i) {
+      obj[arr[i]] = i;
+    }
+    return obj;
+}
+  
+const Shapes = Enum([
+    "Rectangle",
+    "Hexagon",
+]);
+
 class ConvexShape {
-    constructor(position, name, color = "#FFFFFF", fill, lineWidth = 2, zIndex = 0) {
+    constructor(position, name, color = "#FFFFFF", fill = "#FFFFFF", lineWidth = 2, zIndex = 0) {
         this.position = position;
         this.lineWidth = lineWidth;
         this.name = name;
@@ -12,6 +30,11 @@ class ConvexShape {
         this.isSelected = false;
         this.beingDragged = false;
         this.snapGrids = [];
+        this.screenScale = 1;
+        this.screenOffset = {
+            x: 0,
+            y: 0,
+        };
     }
 
     move(dx, dy) {
@@ -23,6 +46,15 @@ class ConvexShape {
         this.zIndex = val;
         sortObjectsByZIndex();
     }
+
+    updateScreenPositionAndScale(screenX, screenY, screenScale) {
+        this.screenOffset.x = screenX;
+        this.screenOffset.y = screenY;
+        this.screenScale = screenScale;
+    }
 };
 
-module.exports = ConvexShape;
+module.exports = {
+    ConvexShape,
+    Shapes,
+};

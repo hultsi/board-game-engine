@@ -10,26 +10,44 @@ const initiateGame = function initiateGame(imagePaths, callback) {
     imageCollection.load(imagePaths, callback);
 }
 
-const updateAllBegin = function updateAllBegin() {
-    dragObject();
+const updateAllBegin = function updateAllBegin(updateBeginCb = null) {
+    // First move screen
     zoomScreen();
     if (!screen.stop) {
         moveScreen();
     }
-    if (game.objects.shouldSortMap())
+    if (game.objects.shouldSortMap()) {
         game.objects.sortByZIndex();
-}
+    }
+    for (let i = 0; i < objects.all.length; ++i) {
+        objects.all[i].updateScreenPositionAndScale(-screen.x, -screen.y, screen.zoomScale);
+    }
 
-const updateAll = function updateAll() {
+    // Then drag an object
+    // TODO: could this function return the things and then we'd do everything here without side effects?
+    dragObject();
     const { obj, offsetX, offsetY } = game.others.dragged;
     if (obj) {
         obj.position.x = listeners.mouse.x/screen.zoomScale + screen.x - offsetX/screen.zoomScale;
         obj.position.y = listeners.mouse.y/screen.zoomScale + screen.y - offsetY/screen.zoomScale;
     }
+
+    if (updateBeginCb) {
+        updateBeginCb();
+    }
 }
 
-const updateAllEnd = function updateAllEnd() {
+const updateAll = function updateAll(updateCb = null) {
+    if (updateCb) {
+        updateCb();
+    }
+}
+
+const updateAllEnd = function updateAllEnd(updateEndCb = null) {
     listeners.updateEnd();
+    if (updateEndCb) {
+        updateEndCb();
+    }
 }
 
 const drawAll = function drawAll() {
@@ -42,7 +60,7 @@ const drawAll = function drawAll() {
         grid.draw(screen.ctx, offsetX, offsetY, scale);
     }
     for (const obj of objects.all) {
-        obj.draw(screen.ctx, offsetX, offsetY, scale);
+        obj.draw(screen.ctx);
     }
 }
 

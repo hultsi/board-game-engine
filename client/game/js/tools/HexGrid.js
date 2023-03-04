@@ -12,11 +12,11 @@ class HexGrid {
 
     getCoords(xi, yi) {
         // xOffset
-        const xOffset = 2 * (3/4) * this.radius * xi;
+        const xOffset = 2 * (3/4) * this.radius * yi;
         // yOffset
-        const evenOdd = ((xi % 2) * 2) - 1;
+        const evenOdd = ((yi % 2) * 2) - 1;
         const yAdd = (this.colums % 2 == 1 ? Math.sqrt(3) * this.radius : Math.sqrt(3) * this.radius / 2);
-        const yOffset = (1 + evenOdd) * Math.sqrt(3) * this.radius / 4 + 2*yAdd*yi;
+        const yOffset = (1 + evenOdd) * Math.sqrt(3) * this.radius / 4 + 2*yAdd*xi;
 
         const x = this.position.x + xOffset;
         const y = this.position.y + yOffset;

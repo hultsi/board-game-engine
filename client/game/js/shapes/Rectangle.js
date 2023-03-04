@@ -1,4 +1,4 @@
-const ConvexShape = require("./ConvexShape.js");
+const { ConvexShape, Shapes } = require("./ConvexShape.js");
 
 class Rectangle extends ConvexShape {
     constructor(position, img, width, height, name, color = "#FFFFFF", fill = "#FFFFFF", lineWidth = 1, zIndex = 0) {
@@ -12,17 +12,17 @@ class Rectangle extends ConvexShape {
 
     }
 
-    draw(ctx, offsetX, offsetY, scale) {
-        const xx = (this.position.x + offsetX) * scale;
-        const yy = (this.position.y + offsetY) * scale;
-        const width = this.width * scale;
-        const height = this.height * scale;
-
+    draw(ctx) {
+        const xx = (this.position.x + this.screenOffset.x) * this.screenScale;
+        const yy = (this.position.y + this.screenOffset.y) * this.screenScale;
+        const width = this.width * this.screenScale;
+        const height = this.height * this.screenScale;
+        console.log(this.screenScale);
         ctx.save();
         if (this.img) {
             ctx.drawImage(this.img, xx, yy, width, height);
         }
-        ctx.lineWidth = this.lineWidth * scale;
+        ctx.lineWidth = this.lineWidth * this.screenScale;
         ctx.strokeStyle = this.color;
         ctx.fillStyle = this.fill;
 
@@ -40,13 +40,13 @@ class Rectangle extends ConvexShape {
         ctx.restore();
 
         if (this.isSelected)
-            this.drawOutline(ctx, xx, yy, width, height, scale);
+            this.drawOutline(ctx, xx, yy, width, height);
     }
 
-    drawOutline(ctx, xx, yy, width, height, scale) {
+    drawOutline(ctx, xx, yy, width, height) {
         ctx.save();
 
-        ctx.lineWidth = this.lineWidth * scale * 1;
+        ctx.lineWidth = this.lineWidth * this.screenScale * 1;
         for (let i = 0; i < 4; ++i) {
             ctx.beginPath();
             ctx.moveTo(xx - i, yy - i);

@@ -14,7 +14,7 @@ class GameScreen {
         this.bgColor = null;
         this.stop = false;
 
-        this.gameScreenResize = this.gameScreenResize.bind(this);
+        this.gameScreenResizeListener = this.gameScreenResizeListener.bind(this);
     }
 
     createCanvas(width, height) {
@@ -61,27 +61,27 @@ class GameScreen {
         this.canvas.height = window.innerHeight;
         
         if (fit) {
-            addListener(window, "resize", this.gameScreenResize);
+            addListener(window, "resize", this.gameScreenResizeListener);
         } else {
-            removeListener(window, "resize", this.gameScreenResize);
+            removeListener(window, "resize", this.gameScreenResizeListener);
         }
     }
     
     preventContextMenu(prevent = true) {
         if (prevent) {
-            addListener(this.canvas, "contextmenu", this.preventContextMenu);
+            addListener(this.canvas, "contextmenu", this.preventDefaultListener);
         } else {
-            removeListener(this.canvas, "contextmenu", this.preventContextMenu);
+            removeListener(this.canvas, "contextmenu", this.preventDefaultListener);
         }
     }
     
-    gameScreenResize() {
+    gameScreenResizeListener() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.draw();
     };
 
-    preventGameScreenContextMenu(ev) {
+    preventDefaultListener(ev) {
         ev.preventDefault();
     }
 };

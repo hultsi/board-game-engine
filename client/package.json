@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "watch": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack",
+    "build-chess": "webpack --env entry='./game/examples/chess.js'",
+    "watch-chess": "webpack --watch --env entry='./game/examples/chess.js'"
   },
   "keywords": [],
   "author": "",

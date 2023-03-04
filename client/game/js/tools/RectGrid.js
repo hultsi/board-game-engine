@@ -12,8 +12,8 @@ class RectGrid {
     }
 
     getCoords(xi, yi) {
-        const x = this.position.x + this.width * xi;
-        const y = this.position.y + this.height * yi;
+        const x = this.position.x + this.width * yi;
+        const y = this.position.y + this.height * xi;
         return {x, y};
     }
 
