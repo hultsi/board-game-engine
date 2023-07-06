@@ -12,7 +12,7 @@ const grid = require("./helpers/grid.js");
 
 // Define all program related images here
 let imagePaths = [
-	{ name: "main_map", url: "./assets/imgs/TM_map.jpeg"}
+	// { name: "main_map", url: "./assets/imgs/TM_map.jpeg"}
 ];
 
 const startGame = function startGame() {
